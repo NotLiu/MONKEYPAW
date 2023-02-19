@@ -40,6 +40,12 @@ jump={
  ]
 }
 
+[layer_names]
+
+2d_physics/layer_5="EnemyHurtbox"
+2d_physics/layer_6="PlayerHurtbox"
+2d_physics/layer_7="Player"
+
 [mono]
 
 project/assembly_name="MONKEYPAW"

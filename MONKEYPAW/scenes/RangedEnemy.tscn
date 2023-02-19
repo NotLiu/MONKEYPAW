@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://RangedEnemy.gd" type="Script" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://scenes/PlayerDetectionZone.tscn" type="PackedScene" id=3]
+
+[node name="RangedEnemy" type="RigidBody2D"]
+gravity_scale = 0.0
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="rays" type="Node2D" parent="."]
+
+[node name="RayCast2D" type="RayCast2D" parent="rays"]
+cast_to = Vector2( 0, 90 )
+
+[node name="RayCast2D2" type="RayCast2D" parent="rays"]
+rotation = 1.5708
+cast_to = Vector2( 0, 90 )
+
+[node name="RayCast2D3" type="RayCast2D" parent="rays"]
+rotation = -3.14159
+cast_to = Vector2( 0, 90 )
+
+[node name="RayCast2D4" type="RayCast2D" parent="rays"]
+rotation = 4.71239
+cast_to = Vector2( 0, 90 )
+
+[node name="PlayerDetectionZone" parent="." instance=ExtResource( 3 )]
+
+[node name="shootCooldown" type="Timer" parent="."]
+
+[connection signal="timeout" from="shootCooldown" to="." method="_on_shootCooldown_timeout"]
+
+[editable path="PlayerDetectionZone"]
