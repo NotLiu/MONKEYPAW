@@ -14,6 +14,10 @@ config/name="MONKEYPAW"
 run/main_scene="res://scenes/Main.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+MonkeyPawUi="*res://scenes/monkeyPawUI.tscn"
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
