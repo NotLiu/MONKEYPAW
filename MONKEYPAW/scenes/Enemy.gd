@@ -71,9 +71,9 @@ func _physics_process(delta):
 		ATTACK:
 			var player = PlayerDetectionZone.player
 			if (player != null):
-				# move(player.global_position, delta)
-				var direction = (player.global_position - global_position).normalized()
-				velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
+				move(player.global_position, delta)
+				# var direction = (player.global_position - global_position).normalized()
+				# velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
 				
 				# Attack
 				attack()

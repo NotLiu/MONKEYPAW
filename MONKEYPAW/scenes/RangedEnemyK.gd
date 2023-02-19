@@ -1,11 +1,11 @@
-extends RigidBody2D
+extends KinematicBody2D
 
 var health = 100
 
-
 export var FRICTION = 200
-export var MAX_SPEED = 150
+export var MAX_SPEED = 250
 export var MAX_THRUST = 150
+export var ACCELERATION = 150
 
 export var SHOOTCOOLDOWN = 2.0
 
@@ -27,8 +27,9 @@ export var EnemyProjectile = preload("res://scenes/EnemyProjectile.tscn")
 
 # knockback
 var knockback = Vector2.ZERO
-export var KNOCKBACK_FORCE = 250
+export var KNOCKBACK_FORCE = 200
 
+var linear_velocity = Vector2.ZERO
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -41,7 +42,7 @@ func _ready():
 
 func _physics_process(delta):
 	knockback = knockback.move_toward(Vector2.ZERO, FRICTION * delta)
-	linear_velocity += knockback
+	knockback = move_and_slide(knockback)
 	
 	match state:
 		IDLE:
@@ -67,8 +68,9 @@ func _physics_process(delta):
 					var dodge_direction = 1
 					if randf() < 0.5:
 						dodge_direction = -1
-					linear_velocity += normal * MAX_THRUST * 2 * delta
-					linear_velocity += normal.rotated(PI/2 * dodge_direction) * MAX_THRUST * delta
+					linear_velocity = linear_velocity.move_toward(linear_velocity + (normal * MAX_THRUST ), 2 * ACCELERATION * delta)
+					linear_velocity = linear_velocity.move_toward(normal.rotated(PI/2 * dodge_direction) * MAX_THRUST, ACCELERATION * delta)
+					linear_velocity = move_and_slide(linear_velocity)
 					
 				
 				# Steer towards player
@@ -77,14 +79,17 @@ func _physics_process(delta):
 				
 				if distance_to_player > 200:
 					# Move towards player
-					linear_velocity += vector_to_player * MAX_THRUST * delta
+					linear_velocity = linear_velocity.move_toward(vector_to_player * MAX_THRUST, ACCELERATION * delta)
+					linear_velocity = move_and_slide(linear_velocity)
 				else:
 					# Move away from player
-					linear_velocity += -vector_to_player * MAX_THRUST * delta
+					linear_velocity = linear_velocity.move_toward(-vector_to_player * MAX_THRUST, ACCELERATION * delta)
+					linear_velocity = move_and_slide(linear_velocity)
 					
 				# Clamp max speed
 				if linear_velocity.length() > MAX_SPEED:
 					linear_velocity = linear_velocity.normalized() * MAX_SPEED
+					linear_velocity = move_and_slide(linear_velocity)
 					
 				# shoot at player
 				if (!shootTriggered):
@@ -98,6 +103,8 @@ func _physics_process(delta):
 
 func take_damage(dmg):
 	health -= dmg
+	
+	print("enemy hit ", health)
 	
 	if (health <= 0):
 		queue_free()
