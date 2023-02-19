@@ -24,6 +24,11 @@ var shootTriggered = false
 export var EnemyProjectile = preload("res://scenes/EnemyProjectile.tscn")
 
 
+# knockback
+var knockback = Vector2.ZERO
+export var KNOCKBACK_FORCE = 250
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -34,6 +39,9 @@ func _ready():
 #	pass
 
 func _physics_process(delta):
+	knockback = knockback.move_toward(Vector2.ZERO, FRICTION * delta)
+	linear_velocity += knockback
+	
 	match state:
 		IDLE:
 			linear_velocity = linear_velocity.move_toward(Vector2.ZERO, FRICTION * delta)
@@ -116,3 +124,8 @@ func shoot():
 
 func _on_shootCooldown_timeout():
 	shoot()
+
+
+func _on_Hurtbox_area_entered(area):
+	take_damage(20) # change this number based on player mayhaps
+	knockback = area.knockback_vector * KNOCKBACK_FORCE

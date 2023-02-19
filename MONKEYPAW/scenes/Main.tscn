@@ -13,4 +13,4 @@
 [node name="RangedEnemy" parent="." instance=ExtResource( 4 )]
 
 [node name="Enemy" parent="." instance=ExtResource( 3 )]
-position = Vector2( 1310, 465 )
+position = Vector2( 951, 492 )
