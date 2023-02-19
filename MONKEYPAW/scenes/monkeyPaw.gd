@@ -5,6 +5,7 @@ var wishes = ["guardianAngel", "aegis", "blessingOfPerseus", "timeSword", "death
 var costs = ["block", "attack", "dash", "jump", "dodge", "color", "sight"]
 
 export var wishIcon = []
+var removedCosts = []
 
 #key (wishCode) : [0: card title, 1: description, 2:icon]
 var monkeyPawTable = {
@@ -88,12 +89,6 @@ func makeWish(data):
 	var tw = create_tween()
 	selected = data[2]
 	
-	if data[0] == "blessingOfEir":
-		var randDict = pawCostTable.keys()
-		var healedItem = randDict[randi()%randDict.size()]
-		print(healedItem)
-		costs.append(healedItem)
-	
 	#set animations and data display
 	$costCard/RichTextLabel.bbcode_text = "[center]"+data[1]+"[/center]"
 	$costCard/RichTextLabel2.bbcode_text = "[center]"+pawCostTable[data[1]]+"[/center]"
@@ -109,7 +104,15 @@ func makeWish(data):
 
 	$Timer.start()
 	removeTable(data[0], wishes)
+	removedCosts.append(data[1])
 	removeTable(data[1], costs)
+	
+	if data[0] == "blessingOfEir":
+		var randDict = pawCostTable.keys()
+		var healedItem = removedCosts[randi()%removedCosts.size()]
+		print(healedItem)
+		costs.append(healedItem)
+	
 
 func resetState():
 	$CenterContainer/HBoxContainer.margin_top = 300.0
