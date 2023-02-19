@@ -2,9 +2,7 @@
 
 [ext_resource path="res://RangedEnemy.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
-
-[sub_resource type="CircleShape2D" id=1]
-radius = 364.067
+[ext_resource path="res://scenes/PlayerDetectionZone.tscn" type="PackedScene" id=3]
 
 [node name="RangedEnemy" type="RigidBody2D"]
 gravity_scale = 0.0
@@ -30,12 +28,6 @@ cast_to = Vector2( 0, 90 )
 rotation = 4.71239
 cast_to = Vector2( 0, 90 )
 
-[node name="PlayerDetectionZone" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 64
+[node name="PlayerDetectionZone" parent="." instance=ExtResource( 3 )]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionZone"]
-shape = SubResource( 1 )
-
-[connection signal="body_entered" from="PlayerDetectionZone" to="." method="_on_PlayerDetectionZone_body_entered"]
-[connection signal="body_exited" from="PlayerDetectionZone" to="." method="_on_PlayerDetectionZone_body_exited"]
+[editable path="PlayerDetectionZone"]

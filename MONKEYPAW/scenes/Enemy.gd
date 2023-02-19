@@ -64,18 +64,18 @@ func _physics_process(delta):
 						triggerAttackTimer()
 					else:
 						AttackTimer.stop()
-						print("stopping")
+						# print("stopping")
 			else:
 				state = IDLE
 		ATTACK:
 			var player = PlayerDetectionZone.player
 			if (player != null):
-				# move(player.global_position, delta)
-				var direction = (player.global_position - global_position).normalized()
-				velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
+				move(player.global_position, delta)
+				# var direction = (player.global_position - global_position).normalized()
+				# velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
 				
 				# Attack
-				print("Attacking..")
+				attack()
 				
 			else:
 				state = SURROUND
@@ -119,7 +119,7 @@ func get_circle_position(target, random):
 
 
 func _on_Hurtbox_area_entered(area):
-	# take_damage(20)
+	take_damage(20) # change this number based on player mayhaps
 	# knockback = area.knockback_vector * 120 # need to create knockback_vector as variable in player hitbox
 	knockback = Vector2.RIGHT * 120
 
