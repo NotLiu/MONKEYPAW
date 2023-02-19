@@ -6,6 +6,8 @@ export var FRICTION = 200
 export var MAX_SPEED = 150
 export var MAX_THRUST = 150
 
+export var SHOOTCOOLDOWN = 2.0
+
 # state
 enum {
 	IDLE,
@@ -16,6 +18,11 @@ var state = IDLE
 
 # onready var player = get_tree().get_root().get_node("Main/Player")
 onready var PlayerDetectionZone = $PlayerDetectionZone
+
+# shoot
+var shootTriggered = false
+export var EnemyProjectile = preload("res://scenes/EnemyProjectile.tscn")
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -69,8 +76,15 @@ func _physics_process(delta):
 				# Clamp max speed
 				if linear_velocity.length() > MAX_SPEED:
 					linear_velocity = linear_velocity.normalized() * MAX_SPEED
+					
+				# shoot at player
+				if (!shootTriggered):
+					shootTriggered = true
+					shoot()
 			else:
 				state = IDLE
+				shootTriggered = false
+				$shootCooldown.stop()
 
 
 func take_damage(dmg):
@@ -83,3 +97,22 @@ func take_damage(dmg):
 func seek_player():
 	if PlayerDetectionZone.can_see_player():
 		state = ATTACK
+		
+func shoot():
+	$shootCooldown.wait_time = SHOOTCOOLDOWN * (1 + rand_range(-0.25, 0.25))
+	$shootCooldown.start()
+	
+	print("shooting")
+	var player = PlayerDetectionZone.player
+	if player != null:
+		var enemy_projectile_instance = EnemyProjectile.instance()
+		get_tree().get_root().add_child(enemy_projectile_instance)
+		enemy_projectile_instance.global_position = global_position
+		
+		var direction = (player.global_position - global_position).normalized()
+		enemy_projectile_instance.global_rotation = direction.angle() + PI / 2.0
+		enemy_projectile_instance.direction = direction
+
+
+func _on_shootCooldown_timeout():
+	shoot()

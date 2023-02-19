@@ -30,4 +30,8 @@ cast_to = Vector2( 0, 90 )
 
 [node name="PlayerDetectionZone" parent="." instance=ExtResource( 3 )]
 
+[node name="shootCooldown" type="Timer" parent="."]
+
+[connection signal="timeout" from="shootCooldown" to="." method="_on_shootCooldown_timeout"]
+
 [editable path="PlayerDetectionZone"]
