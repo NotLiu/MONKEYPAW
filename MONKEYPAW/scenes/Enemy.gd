@@ -28,6 +28,7 @@ var randomnum
 
 # knockback
 var knockback = Vector2.ZERO
+export var KNOCKBACK_FORCE = 250
 
 onready var PlayerDetectionZone = $PlayerDetectionZone
 onready var AttackTimer = $AttackTimer
@@ -120,8 +121,7 @@ func get_circle_position(target, random):
 
 func _on_Hurtbox_area_entered(area):
 	take_damage(20) # change this number based on player mayhaps
-	# knockback = area.knockback_vector * 120 # need to create knockback_vector as variable in player hitbox
-	knockback = Vector2.RIGHT * 120
+	knockback = area.knockback_vector * KNOCKBACK_FORCE
 
 
 func _on_AttackTimer_timeout():
