@@ -57,3 +57,7 @@ func _physics_process(delta):
 		# set sword hitbox knockback vector
 		swordHitBox.knockback_vector = velocity
 
+
+
+func _on_Hurtbox_area_entered(area):
+	print("player getting attacked")
