@@ -10,12 +10,12 @@ var velocity = Vector2.ZERO
 
 # state
 enum {
-	Surround,
-	Attack,
-	Hit
+	SURROUND,
+	ATTACK,
+	HIT
 }
 
-var state = Surround
+var state = SURROUND
 
 onready var player = get_tree().get_root().get_node("Main/Player")
 
@@ -37,11 +37,11 @@ func _ready():
 
 func _physics_process(delta):
 	match state:
-		Surround:
+		SURROUND:
 			move(get_circle_position(randomnum), delta)
-		Attack:
+		ATTACK:
 			move(player.global_position, delta)
-		Hit:
+		HIT:
 			move(player.global_position, delta)
 			# Attack
 	
