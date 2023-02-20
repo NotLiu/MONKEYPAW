@@ -152,3 +152,18 @@ func _on_AttackTimer_timeout():
 func _on_AttackInterval_timeout():
 	$Hitbox/CollisionShape2D.disabled = true
 	attack()
+
+
+func _on_BlockDetector_area_entered(area):
+	# simulate enemy retreat/dodge after attacking
+	var player = PlayerDetectionZone.player
+	if player != null:
+		var distance_to_player = global_position.distance_to(player.global_position)
+		if (distance_to_player <= 75):
+			knockback = -velocity * 5
+			
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
+	randomnum = rng.randf()
+	state = SURROUND
+	
