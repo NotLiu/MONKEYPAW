@@ -11,7 +11,7 @@ export var FRICTION = 200
 export var ACCELERATION = 300
 export var MAX_SPEED = 75
 
-export var SURROUND_RADIUS = 100
+export var SURROUND_RADIUS = 175
 
 # state
 enum {
@@ -33,7 +33,9 @@ export var KNOCKBACK_FORCE = 250
 onready var PlayerDetectionZone = $PlayerDetectionZone
 onready var AttackTimer = $AttackTimer
 var attackTimerTriggered = false
-export var attackTimerInterval = 1.5
+export var attackTimerInterval = 1.5 # time before it transitions from surround to attack
+export var ATTACK_INTERVAL = 1
+var isAttacking = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -76,7 +78,16 @@ func _physics_process(delta):
 				# velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
 				
 				# Attack
-				attack()
+				var distance_to_player = global_position.distance_to(player.global_position)
+				var vector_to_player = (player.global_position - global_position).normalized()
+				if (distance_to_player <= 75):
+					if (!isAttacking):
+						attack()
+						isAttacking = true
+				else:
+					isAttacking = false
+					$AttackInterval.stop()
+					$Hitbox/CollisionShape2D.disabled = true
 				
 			else:
 				state = SURROUND
@@ -100,7 +111,16 @@ func take_damage(dmg):
 		queue_free()
 
 func attack():
+	$AttackInterval.start()
+	
+	$Hitbox/CollisionShape2D.disabled = false
 	print("enemy attacking")
+	
+	# simulate enemy retreat/dodge after attacking
+	knockback = -velocity * 4.5
+	
+
+	
 
 func move(target, delta):
 	var direction = (target - global_position).normalized()
@@ -127,3 +147,8 @@ func _on_Hurtbox_area_entered(area):
 func _on_AttackTimer_timeout():
 	state = ATTACK
 	attackTimerTriggered = false
+
+
+func _on_AttackInterval_timeout():
+	$Hitbox/CollisionShape2D.disabled = true
+	attack()
