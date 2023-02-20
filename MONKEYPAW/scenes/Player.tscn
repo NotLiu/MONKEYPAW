@@ -46,9 +46,8 @@ disabled = true
 
 [node name="Area2D" type="Area2D" parent="BlockPivot"]
 position = Vector2( 50, -10 )
-collision_layer = 0
-collision_mask = 16
-script = ExtResource( 3 )
+collision_layer = 128
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BlockPivot/Area2D"]
 position = Vector2( 10, 8.5 )
