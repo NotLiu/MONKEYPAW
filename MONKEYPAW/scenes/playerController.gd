@@ -5,6 +5,7 @@ const origSpeed = 200.0
 const dashSpeed = 1200.0
 const dashDur = .1
 onready var dash = $Dash
+onready var BWshader= get_tree().get_root().get_node("Main/BlackAndWhite")
 
 var dir
 
@@ -75,7 +76,12 @@ func _physics_process(delta):
 		if Input.is_action_pressed("dash") && dash.canDash && !dash.isDashing():
 			dash.startDash(dashDur)
 	var speed = dashSpeed if dash.isDashing() else origSpeed
-	
+		
+	#abilities["canColor"] = true
+	if (abilities["canColor"] == true):
+		BWshader.turnOnColor()
+	else:
+		BWshader.turnOffColor()
 	
 	velocity = velocity.normalized()
 	move_and_slide(velocity * speed)
