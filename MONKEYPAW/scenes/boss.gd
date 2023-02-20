@@ -8,7 +8,7 @@ export var MAX_THRUST = 150
 export var ACCELERATION = 150
 
 export var SHOOTCOOLDOWN = 2.0
-var actionBuffer = 1.0
+var actionBuffer = 2.0
 
 # state
 enum states{
@@ -23,29 +23,38 @@ var transitionTrigger = false
 
 # onready var player = get_tree().get_root().get_node("Main/Player")
 onready var PlayerDetectionZone = $PlayerDetectionZone
+onready var sprite = $AnimatedSprite
 
 # shoot
 var shootTriggered = false
 export var EnemyProjectile = preload("res://scenes/EnemyProjectile.tscn")
 
-
+var player
 # knockback
 export var KNOCKBACK_FORCE = 200
 
 var linear_velocity = Vector2.ZERO
+var pupilStartPos
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$actionTimer.wait_time = actionBuffer
-
+	pupilStartPos = $pupil.position
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
 
 func _physics_process(delta):
+	if player:
+		var vector_to_player = (player.global_position - global_position).normalized()
+		$pupil.position = pupilStartPos + vector_to_player * 9.0
+	else:
+		player = PlayerDetectionZone.player
+
 	match state:
 		states.IDLE:
+			sprite.animation = "idle"
 			linear_velocity = linear_velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 			if not transitionTrigger:
 				end_state()
@@ -59,12 +68,12 @@ func _physics_process(delta):
 				shootTriggered = false
 				#$shootCooldown.stop()
 		states.SLAM:
+			sprite.animation = "slam"
 			if not transitionTrigger:
-				print("SLAM")
 				slam()
 		states.SWIPE:
+			sprite.animation = "swipe"
 			if not transitionTrigger:
-				print("SWIPE")
 				swipe()
 				
 			
@@ -76,10 +85,13 @@ func end_state():
 
 func switch_state():
 	var randState = randi()%states.size()
-	state = states[states.keys()[randState]]
-	print(state)
+	var stateEnum = states.keys()[randState]
+	state = states[stateEnum]
+	
+	print(stateEnum)
 
 func take_damage(dmg):
+	sprite.animation = "hit"
 	health -= dmg
 	
 	print("enemy hit ", health)
@@ -95,16 +107,16 @@ func seek_player():
 		state = states.IDLE
 		
 func swipe():
-	end_state()
+	pass
 	
 func slam():
-	end_state()
+	pass
 		
 func shoot():
 	#$shootCooldown.wait_time = SHOOTCOOLDOWN * (1 + rand_range(-0.25, 0.25))
 	#$shootCooldown.start()
 
-	var player = PlayerDetectionZone.player
+	
 	if player != null:
 		var enemy_projectile_instance = EnemyProjectile.instance()
 		get_tree().get_root().add_child(enemy_projectile_instance)
@@ -113,8 +125,6 @@ func shoot():
 		var direction = (player.global_position - global_position).normalized()
 		enemy_projectile_instance.global_rotation = direction.angle() + PI / 2.0
 		enemy_projectile_instance.direction = direction
-	if not transitionTrigger:
-		end_state()
 	
 
 
@@ -130,3 +140,9 @@ func _on_actionTimer_timeout():
 	switch_state()
 	$actionTimer.stop()
 	$actionTimer.wait_time = actionBuffer
+	transitionTrigger = false
+
+
+func _on_AnimatedSprite_animation_finished():
+	if not transitionTrigger:
+		end_state()

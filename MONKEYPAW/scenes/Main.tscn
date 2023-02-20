@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/RangedEnemyK.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://scenes/playerColor.gd" type="Script" id=5]
 [ext_resource path="res://scenes/boss.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/monkeyPaw.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/meteor.tscn" type="PackedScene" id=8]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -48,3 +49,6 @@ position = Vector2( 479, 172 )
 
 [node name="monkeyPaw" parent="." instance=ExtResource( 7 )]
 position = Vector2( 886, 145 )
+
+[node name="meteor" parent="monkeyPaw" instance=ExtResource( 8 )]
+position = Vector2( -58, 254 )
