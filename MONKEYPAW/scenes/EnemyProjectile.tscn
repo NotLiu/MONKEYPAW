@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/EnemyProjectile.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://scenes/Hitbox.tscn" type="PackedScene" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 6, 6 )
 
 [node name="EnemyProjectile" type="KinematicBody2D"]
 script = ExtResource( 1 )
@@ -10,3 +14,14 @@ script = ExtResource( 1 )
 position = Vector2( -4.76837e-07, -4.76837e-07 )
 scale = Vector2( 0.234375, 0.234375 )
 texture = ExtResource( 2 )
+
+[node name="Hitbox" parent="." instance=ExtResource( 3 )]
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+shape = SubResource( 1 )
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
+
+[editable path="Hitbox"]

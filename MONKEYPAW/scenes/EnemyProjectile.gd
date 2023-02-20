@@ -13,3 +13,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	translate(direction * speed * delta)
+
+
+func _on_Hitbox_area_entered(area):
+	queue_free()
