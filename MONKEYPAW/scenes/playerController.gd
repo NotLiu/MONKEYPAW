@@ -78,7 +78,7 @@ func _physics_process(delta):
 	var speed = dashSpeed if dash.isDashing() else origSpeed
 		
 	#abilities["canColor"] = true
-	if (abilities["canColor"] == true):
+	if (abilities["canColor"]):
 		BWshader.turnOnColor()
 	else:
 		BWshader.turnOffColor()
