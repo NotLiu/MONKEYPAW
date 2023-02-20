@@ -3,6 +3,16 @@ extends KinematicBody2D
 export(int) var speed = 200.0
 var dir
 
+var abilities = {
+				"canBlock": true,
+				"canAttack": true,
+				"canDash": true,
+				"canJump": true,
+				"canDodge": true,
+				"canColor": true,
+				"canSight": true
+				}
+
 onready var swordHitBox = $HitboxPivot/Area2D
 
 func _ready():
@@ -27,27 +37,33 @@ func _physics_process(delta):
 		$Sprite.scale.x = 1
 		$Sprite.scale.y = 1
 		$HitboxPivot.rotation_degrees = 0
-
+		$BlockPivot.rotation_degrees = 0
 	if dir == "left":
 		$Sprite.scale.x = -1
 		$Sprite.scale.y = 1
 		$HitboxPivot.rotation_degrees = 180
-
+		$BlockPivot.rotation_degrees = 180
 	if dir == "up":
 		$Sprite.scale.y = -1
 		$HitboxPivot.rotation_degrees = 270
-
+		$BlockPivot.rotation_degrees = 270
 	if dir == "down":
 		$Sprite.scale.y = 1
 		$HitboxPivot.rotation_degrees = 90
+		$BlockPivot.rotation_degrees = 90		
 
 
 	# press A to attack
-	if Input.is_action_pressed("attack"):
-		$HitboxPivot/Area2D/CollisionShape2D.disabled = false
-	else:
-		$HitboxPivot/Area2D/CollisionShape2D.disabled = true
-	
+	if (abilities["canAttack"]):
+		if Input.is_action_pressed("attack"):
+			$HitboxPivot/Area2D/CollisionShape2D.disabled = false
+		else:
+			$HitboxPivot/Area2D/CollisionShape2D.disabled = true
+	if (abilities["canBlock"]):
+		if Input.is_action_pressed("block"):
+			$BlockPivot/Area2D/CollisionShape2D.disabled = false
+		else:
+			$BlockPivot/Area2D/CollisionShape2D.disabled = true	
 	
 	
 	velocity = velocity.normalized()
