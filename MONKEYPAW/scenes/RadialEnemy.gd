@@ -54,7 +54,7 @@ func _physics_process(delta):
 			if player != null:
 				# check nearby objects with raycast
 				var closest_collision = null
-				$rays.rotation += delta + 11 + PI
+				$rays.rotation += delta + 360 + PI
 				for ray in $rays.get_children():
 					if ray.is_colliding():
 						var collision_point = ray.get_collision_point() - global_position

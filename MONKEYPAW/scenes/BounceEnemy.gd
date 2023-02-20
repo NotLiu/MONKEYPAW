@@ -99,3 +99,14 @@ func _on_ChargeArea_body_exited(body):
 func _on_Hurtbox_area_entered(area):
 	take_damage(20) # replace this based on player atk
 	knockback = area.knockback_vector * KNOCKBACK_FORCE
+
+
+func _on_BlockDetector_area_entered(area):
+	"""
+	var player = PlayerDetectionZone.player
+	if player != null:
+		state = ATTACK_IDLE
+		attackTriggered = false
+		velocity = Vector2.ZERO
+	"""
+	pass
