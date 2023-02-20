@@ -104,7 +104,7 @@ func _physics_process(delta):
 func take_damage(dmg):
 	health -= dmg
 	
-	print("enemy hit ", health)
+	#print("enemy hit ", health)
 	
 	if (health <= 0):
 		queue_free()
@@ -118,7 +118,7 @@ func shoot():
 	$shootCooldown.wait_time = SHOOTCOOLDOWN * (1 + rand_range(-0.25, 0.25))
 	$shootCooldown.start()
 	
-	print("shooting")
+	#print("shooting")
 	var player = PlayerDetectionZone.player
 	if player != null:
 		var enemy_projectile_instance = EnemyProjectile.instance()

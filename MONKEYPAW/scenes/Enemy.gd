@@ -114,7 +114,7 @@ func attack():
 	$AttackInterval.start()
 	
 	$Hitbox/CollisionShape2D.disabled = false
-	print("enemy attacking")
+	#print("enemy attacking")
 	
 	# simulate enemy retreat/dodge after attacking
 	knockback = -velocity * 4.5

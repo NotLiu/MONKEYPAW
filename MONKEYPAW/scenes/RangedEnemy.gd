@@ -111,7 +111,7 @@ func shoot():
 	$shootCooldown.wait_time = SHOOTCOOLDOWN * (1 + rand_range(-0.25, 0.25))
 	$shootCooldown.start()
 	
-	print("shooting")
+	#print("shooting")
 	var player = PlayerDetectionZone.player
 	if player != null:
 		var enemy_projectile_instance = EnemyProjectile.instance()
