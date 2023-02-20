@@ -72,7 +72,7 @@ func _physics_process(delta):
 			$BlockPivot/Area2D/CollisionShape2D.disabled = true	
 	# press L_SHIFT to dash
 	if (abilities["canDash"]):
-		if Input.is_action_pressed("dash"):
+		if Input.is_action_pressed("dash") && dash.canDash && !dash.isDashing():
 			dash.startDash(dashDur)
 	var speed = dashSpeed if dash.isDashing() else origSpeed
 	
