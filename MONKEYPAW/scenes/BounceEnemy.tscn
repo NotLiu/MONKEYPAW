@@ -1,0 +1,78 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://scenes/Hitbox.tscn" type="PackedScene" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://scenes/BounceEnemy.gd" type="Script" id=3]
+[ext_resource path="res://scenes/PlayerDetectionZone.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/Hurtbox.tscn" type="PackedScene" id=5]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 29, 29 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 33, 33 )
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 905.221
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 29, 29 )
+
+[sub_resource type="CircleShape2D" id=5]
+radius = 568.848
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 36, 36 )
+
+[node name="BounceEnemy" type="KinematicBody2D"]
+script = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Hitbox" parent="." instance=ExtResource( 1 )]
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+shape = SubResource( 3 )
+
+[node name="PlayerDetectionZone" parent="." instance=ExtResource( 4 )]
+
+[node name="CollisionShape2D" parent="PlayerDetectionZone" index="0"]
+shape = SubResource( 2 )
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="Hurtbox" parent="." instance=ExtResource( 5 )]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+shape = SubResource( 4 )
+
+[node name="ChargeArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChargeArea"]
+shape = SubResource( 5 )
+
+[node name="BlockDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BlockDetector"]
+shape = SubResource( 6 )
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+[connection signal="body_exited" from="ChargeArea" to="." method="_on_ChargeArea_body_exited"]
+[connection signal="area_entered" from="BlockDetector" to="." method="_on_BlockDetector_area_entered"]
+
+[editable path="Hitbox"]
+[editable path="PlayerDetectionZone"]
+[editable path="Hurtbox"]
