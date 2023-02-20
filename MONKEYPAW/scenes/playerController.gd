@@ -1,6 +1,11 @@
 extends KinematicBody2D
 
 export(int) var speed = 200.0
+const origSpeed = 200.0
+const dashSpeed = 1200.0
+const dashDur = .1
+onready var dash = $Dash
+
 var dir
 
 var abilities = {
@@ -59,11 +64,17 @@ func _physics_process(delta):
 			$HitboxPivot/Area2D/CollisionShape2D.disabled = false
 		else:
 			$HitboxPivot/Area2D/CollisionShape2D.disabled = true
+	# press S to block
 	if (abilities["canBlock"]):
 		if Input.is_action_pressed("block"):
 			$BlockPivot/Area2D/CollisionShape2D.disabled = false
 		else:
 			$BlockPivot/Area2D/CollisionShape2D.disabled = true	
+	# press L_SHIFT to dash
+	if (abilities["canDash"]):
+		if Input.is_action_pressed("dash") && dash.canDash && !dash.isDashing():
+			dash.startDash(dashDur)
+	var speed = dashSpeed if dash.isDashing() else origSpeed
 	
 	
 	velocity = velocity.normalized()
