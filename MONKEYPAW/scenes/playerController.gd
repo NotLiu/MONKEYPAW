@@ -5,6 +5,7 @@ export(int) var speed = 200.0
 const origSpeed = 200.0
 const dashSpeed = 1200.0
 const dashDur = .1
+const dodgeDur = .1
 onready var dash = $Dash
 onready var jump = $Jump
 onready var BWshader= get_tree().get_root().get_node("Main/BlackAndWhite")
@@ -76,8 +77,14 @@ func _physics_process(delta):
 	# press L_SHIFT to dash
 	if (abilities["canDash"]):
 		if Input.is_action_pressed("dash") && dash.canDash && !dash.isDashing():
-			dash.startDash(dashDur)
+			dash.startDash(dashDur, "dash")
 	var speed = dashSpeed if dash.isDashing() else origSpeed
+	
+	# press D to dodge
+	if (abilities["canDodge"]):
+		if Input.is_action_pressed("dodge") && dash.canDodge && !dash.isDashing():
+			dash.startDash(dodgeDur, "dodge")
+	speed = dashSpeed if dash.isDashing() else origSpeed
 		
 	#abilities["canColor"] = false
 	if (abilities["canColor"]):
@@ -95,6 +102,7 @@ func _physics_process(delta):
 		$Light2D.visible = false
 	else:
 		$Light2D.visible = true
+			
 	
 	velocity = velocity.normalized()
 	move_and_slide(velocity * speed)
