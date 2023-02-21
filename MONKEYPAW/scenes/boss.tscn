@@ -5,7 +5,7 @@
 [ext_resource path="res://assets/SKELELORDhitsheet.png" type="Texture" id=3]
 [ext_resource path="res://assets/SKELELORDswipesheet.png" type="Texture" id=4]
 [ext_resource path="res://scenes/boss.gd" type="Script" id=5]
-[ext_resource path="res://scenes/PlayerDetectionZone.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/PlayerDetectionZone.gd" type="Script" id=6]
 [ext_resource path="res://assets/pupil.png" type="Texture" id=7]
 
 [sub_resource type="AtlasTexture" id=2]
@@ -146,7 +146,7 @@ script = ExtResource( 5 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 2
+frame = 3
 playing = true
 
 [node name="pupil" type="Sprite" parent="."]
@@ -161,9 +161,12 @@ shape = SubResource( 24 )
 position = Vector2( 36.1539, -73.0769 )
 shape = SubResource( 25 )
 
-[node name="PlayerDetectionZone" parent="." instance=ExtResource( 6 )]
+[node name="PlayerDetectionZone" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 64
+script = ExtResource( 6 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionZone"]
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="PlayerDetectionZone"]
 position = Vector2( 39.2308, 56.1539 )
 shape = SubResource( 30 )
 
@@ -189,8 +192,7 @@ position = Vector2( -185.385, 36.9231 )
 shape = SubResource( 28 )
 
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
+[connection signal="body_entered" from="PlayerDetectionZone" to="PlayerDetectionZone" method="_on_PlayerDetectionZone_body_entered"]
 [connection signal="timeout" from="actionTimer" to="." method="_on_actionTimer_timeout"]
 [connection signal="timeout" from="meteorTimer" to="." method="_on_meteorTimer_timeout"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
-
-[editable path="PlayerDetectionZone"]

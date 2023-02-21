@@ -51,12 +51,12 @@ func _physics_process(delta):
 		$pupil.position = pupilStartPos + vector_to_player * 9.0
 	else:
 		player = PlayerDetectionZone.player
-
+	
 	match state:
 		states.IDLE:
 			if sprite.animation != "hit" or sprite.frame == 2:
 				sprite.animation = "idle"
-			if not transitionTrigger:
+			if not transitionTrigger and player != null:
 				end_state()
 		states.ATTACK:	
 			# shoot at player
@@ -159,7 +159,7 @@ func _on_actionTimer_timeout():
 
 
 func _on_AnimatedSprite_animation_finished():
-	if not transitionTrigger and sprite.animation != "hit":
+	if not transitionTrigger and sprite.animation != "hit" and player != null:
 		end_state()
 
 
