@@ -136,4 +136,5 @@ func _on_shootCooldown_timeout():
 
 func _on_Hurtbox_area_entered(area):
 	take_damage(20) # change this number based on player mayhaps
-	knockback = area.knockback_vector * KNOCKBACK_FORCE
+	if area.name != "Hurtbox":
+		knockback = area.knockback_vector * KNOCKBACK_FORCE

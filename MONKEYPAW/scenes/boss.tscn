@@ -99,7 +99,7 @@ region = Rect2( 4116, 0, 588, 425 )
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 3 ) ],
-"loop": true,
+"loop": false,
 "name": "hit",
 "speed": 8.0
 }, {
@@ -130,7 +130,7 @@ height = 63.077
 radius = 196.883
 
 [sub_resource type="CircleShape2D" id=29]
-radius = 112.318
+radius = 83.8497
 
 [sub_resource type="RectangleShape2D" id=27]
 extents = Vector2( 265.385, 28.4615 )
@@ -146,7 +146,7 @@ script = ExtResource( 5 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 1
+frame = 2
 playing = true
 
 [node name="pupil" type="Sprite" parent="."]
@@ -173,7 +173,7 @@ shape = SubResource( 30 )
 wait_time = 0.4
 
 [node name="Hurtbox" type="Area2D" parent="."]
-collision_layer = 16
+collision_layer = 512
 collision_mask = 0
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="Hurtbox"]

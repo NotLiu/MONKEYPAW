@@ -41,7 +41,7 @@ disabled = true
 
 [node name="Hitbox" type="Area2D" parent="." groups=["meteor"]]
 collision_layer = 32
-collision_mask = 32
+collision_mask = 544
 script = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]

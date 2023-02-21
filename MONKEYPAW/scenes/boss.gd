@@ -54,7 +54,8 @@ func _physics_process(delta):
 
 	match state:
 		states.IDLE:
-			sprite.animation = "idle"
+			if sprite.animation != "hit" or sprite.frame == 2:
+				sprite.animation = "idle"
 			if not transitionTrigger:
 				end_state()
 		states.ATTACK:	
@@ -67,12 +68,14 @@ func _physics_process(delta):
 				shootTriggered = false
 				#$shootCooldown.stop()
 		states.SLAM:
-			sprite.animation = "slam"
+			if sprite.animation != "hit" or sprite.frame == 2:
+				sprite.animation = "slam"
 			if not transitionTrigger and slamStarted == false:
 				slamStarted = true
 				slam()
 		states.SWIPE:
-			sprite.animation = "swipe"
+			if sprite.animation != "hit" or sprite.frame == 2:
+				sprite.animation = "swipe"
 			if not transitionTrigger:
 				swipe()
 				
@@ -144,6 +147,7 @@ func _on_shootCooldown_timeout():
 
 
 func _on_Hurtbox_area_entered(area):
+	print("BOSS DMAGE", area.get_parent().name)
 	take_damage(20) # change this number based on player mayhaps
 
 
@@ -155,7 +159,7 @@ func _on_actionTimer_timeout():
 
 
 func _on_AnimatedSprite_animation_finished():
-	if not transitionTrigger:
+	if not transitionTrigger and sprite.animation != "hit":
 		end_state()
 
 

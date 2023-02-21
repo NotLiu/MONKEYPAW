@@ -41,10 +41,10 @@ margin_right = 1023.0
 margin_bottom = 604.0
 script = ExtResource( 5 )
 
-[node name="KinematicBody2D" parent="." instance=ExtResource( 6 )]
-position = Vector2( 479, 172 )
-
 [node name="Player" parent="." instance=ExtResource( 2 )]
 
 [node name="monkeyPaw" parent="." instance=ExtResource( 7 )]
 position = Vector2( 886, 145 )
+
+[node name="boss" parent="." instance=ExtResource( 6 )]
+position = Vector2( 475, 185 )
