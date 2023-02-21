@@ -13,13 +13,13 @@ onready var BWshader= get_tree().get_root().get_node("Main/BlackAndWhite")
 var dir
 
 var abilities = {
-				"canBlock": true,
-				"canAttack": true,
-				"canDash": true,
-				"canJump": true,
-				"canDodge": true,
-				"canColor": true,
-				"canSight": true
+				"block": true,
+				"attack": true,
+				"dash": true,
+				"jump": true,
+				"dodge": true,
+				"color": true,
+				"sight": true
 				}
 
 onready var swordHitBox = $HitboxPivot/Area2D
@@ -63,45 +63,45 @@ func _physics_process(delta):
 
 
 	# press A to attack
-	if (abilities["canAttack"]):
+	if (abilities["attack"]):
 		if Input.is_action_pressed("attack"):
 			$HitboxPivot/Area2D/CollisionShape2D.disabled = false
 		else:
 			$HitboxPivot/Area2D/CollisionShape2D.disabled = true
 	# press S to block
-	if (abilities["canBlock"]):
+	if (abilities["block"]):
 		if Input.is_action_pressed("block"):
 			$BlockPivot/Area2D/CollisionShape2D.disabled = false
 		else:
 			$BlockPivot/Area2D/CollisionShape2D.disabled = true	
 	# press L_SHIFT to dash
-	if (abilities["canDash"]):
+	if (abilities["dash"]):
 		if Input.is_action_pressed("dash") && dash.canDash && !dash.isDashing():
 			dash.startDash(dashDur, "dash")
 	var speed = dashSpeed if dash.isDashing() else origSpeed
 	
 	# press D to dodge
-	if (abilities["canDodge"]):
+	if (abilities["dodge"]):
 		if Input.is_action_pressed("dodge") && dash.canDodge && !dash.isDashing():
 			dash.startDash(dodgeDur, "dodge")
 	speed = dashSpeed if dash.isDashing() else origSpeed
 		
 	#abilities["canColor"] = false
-	if (abilities["canColor"]):
+	if (abilities["color"]):
 		BWshader.turnOnColor()
 	else:
 		BWshader.turnOffColor()
 		
-	if (abilities["canJump"]):
+	if (abilities["jump"]):
 		if Input.is_action_pressed("jump") && jump.canJump && !jump.isJumping():
 			jump.startJump(0.5)
 	set_collision_mask_bit(2, false) if jump.isJumping() else set_collision_mask_bit(2, true)
 	
 	#abilities["canSight"] = false
-	if (abilities["canSight"]):
-		$Light2D.visible = false
-	else:
-		$Light2D.visible = true
+	#if (abilities["canSight"]):
+	#	get_child(1).visible = false
+	#else:
+	#	get_child(1).visible = true
 			
 	
 	velocity = velocity.normalized()
