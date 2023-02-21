@@ -1,0 +1,27 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://shaders/starryShader.gdshader" type="Shader" id=1]
+
+[resource]
+shader = ExtResource( 1 )
+shader_param/overlay = true
+shader_param/scanlines_opacity = 0.026
+shader_param/scanlines_width = 0.106
+shader_param/grille_opacity = 0.002
+shader_param/resolution = Vector2( 640, 480 )
+shader_param/pixelate = false
+shader_param/roll = false
+shader_param/roll_speed = 0.316
+shader_param/roll_size = 5.94
+shader_param/roll_variation = 0.163
+shader_param/distort_intensity = 0.009
+shader_param/noise_opacity = 0.023
+shader_param/noise_speed = -0.814
+shader_param/static_noise_intensity = 0.11
+shader_param/aberration = 0.01
+shader_param/brightness = 1.1
+shader_param/discolor = false
+shader_param/warp_amount = 0.0
+shader_param/clip_warp = false
+shader_param/vignette_intensity = 0.626
+shader_param/vignette_opacity = 0.064

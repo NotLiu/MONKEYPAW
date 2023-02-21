@@ -1,11 +1,10 @@
 extends KinematicBody2D
 
-var health = 100
+var health = 500
 
-export var FRICTION = 200
-export var MAX_SPEED = 250
-export var MAX_THRUST = 150
-export var ACCELERATION = 150
+export var numMeteors = 5
+var meteorOnScreen = 0
+var slamStarted = false
 
 export var SHOOTCOOLDOWN = 2.0
 var actionBuffer = 2.0
@@ -28,6 +27,7 @@ onready var sprite = $AnimatedSprite
 # shoot
 var shootTriggered = false
 export var EnemyProjectile = preload("res://scenes/EnemyProjectile.tscn")
+export var meteor = preload("res://scenes/meteor.tscn")
 
 var player
 # knockback
@@ -55,7 +55,6 @@ func _physics_process(delta):
 	match state:
 		states.IDLE:
 			sprite.animation = "idle"
-			linear_velocity = linear_velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 			if not transitionTrigger:
 				end_state()
 		states.ATTACK:	
@@ -69,7 +68,8 @@ func _physics_process(delta):
 				#$shootCooldown.stop()
 		states.SLAM:
 			sprite.animation = "slam"
-			if not transitionTrigger:
+			if not transitionTrigger and slamStarted == false:
+				slamStarted = true
 				slam()
 		states.SWIPE:
 			sprite.animation = "swipe"
@@ -81,6 +81,7 @@ func _physics_process(delta):
 func end_state():
 	state = states.IDLE
 	transitionTrigger = true
+	slamStarted = false
 	$actionTimer.start()
 
 func switch_state():
@@ -110,7 +111,17 @@ func swipe():
 	pass
 	
 func slam():
-	pass
+	meteorOnScreen = get_parent().get_tree().get_nodes_in_group("meteor").size()
+	if meteorOnScreen < numMeteors:
+		var mtr = meteor.instance()
+		mtr.global_position = player.global_position
+		mtr.z_index = mtr.position[1]*0.1
+		get_parent().add_child(mtr)
+		print(mtr)
+		meteorOnScreen += 1
+		$meteorTimer.start()
+	else:
+		end_state()
 		
 func shoot():
 	#$shootCooldown.wait_time = SHOOTCOOLDOWN * (1 + rand_range(-0.25, 0.25))
@@ -146,3 +157,8 @@ func _on_actionTimer_timeout():
 func _on_AnimatedSprite_animation_finished():
 	if not transitionTrigger:
 		end_state()
+
+
+func _on_meteorTimer_timeout():
+	slam()
+	$meteorTimer.stop()
