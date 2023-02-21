@@ -20,6 +20,6 @@ shader = ExtResource( 1 )
 shader_param/outline_width = -10.493
 shader_param/outline_scalar = 20.0
 shader_param/warp_slow = 5.335
-shader_param/outline_color = Color( 0, 0, 0, 1 )
+shader_param/outline_color = Color( 0.976471, 0, 0.0823529, 1 )
 shader_param/noiseOffset = 0.0
 shader_param/noise = SubResource( 2 )
