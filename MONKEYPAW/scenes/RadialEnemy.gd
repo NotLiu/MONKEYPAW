@@ -7,6 +7,7 @@ export var MAX_SPEED = 250
 export var MAX_THRUST = 150
 export var ACCELERATION = 150
 
+export(int) var NUM_PROJECTILES = 5
 export var SHOOTCOOLDOWN = 2.0
 
 # state
@@ -17,7 +18,7 @@ enum {
 
 var state = IDLE
 
-# onready var player = get_tree().get_root().get_node("Main/Player")
+# player detection zone
 onready var PlayerDetectionZone = $PlayerDetectionZone
 
 # shoot
@@ -118,16 +119,28 @@ func shoot():
 	$shootCooldown.wait_time = SHOOTCOOLDOWN * (1 + rand_range(-0.25, 0.25))
 	$shootCooldown.start()
 	
-	#print("shooting")
+	print("shooting")
 	var player = PlayerDetectionZone.player
 	if player != null:
-		var enemy_projectile_instance = EnemyProjectile.instance()
-		get_tree().get_root().add_child(enemy_projectile_instance)
-		enemy_projectile_instance.global_position = global_position
-		
-		var direction = (player.global_position - global_position).normalized()
-		enemy_projectile_instance.global_rotation = direction.angle() + PI / 2.0
-		enemy_projectile_instance.direction = direction
+		var radius = 5
+		var angleStep = 360.0 / NUM_PROJECTILES
+		var angle = 0
+		for i in range(NUM_PROJECTILES):
+			var dirXPos = global_position.x + sin((angle * PI) / 180) * radius
+			var dirYPos = global_position.y + cos((angle * PI) / 180) * radius
+			
+			var projectileVector = Vector2(dirXPos, dirYPos)
+			var direction = (projectileVector - global_position).normalized() # * moveSpeed
+			
+			var enemy_projectile_instance = EnemyProjectile.instance()
+			get_tree().get_root().add_child(enemy_projectile_instance)
+			enemy_projectile_instance.global_position = global_position
+			
+			# var direction = (player.global_position - global_position).normalized()
+			enemy_projectile_instance.global_rotation = direction.angle() + PI / 2.0
+			enemy_projectile_instance.direction = direction
+			
+			angle += angleStep
 
 
 func _on_shootCooldown_timeout():
@@ -136,5 +149,4 @@ func _on_shootCooldown_timeout():
 
 func _on_Hurtbox_area_entered(area):
 	take_damage(20) # change this number based on player mayhaps
-	if area.name != "Hurtbox":
-		knockback = area.knockback_vector * KNOCKBACK_FORCE
+	knockback = area.knockback_vector * KNOCKBACK_FORCE
