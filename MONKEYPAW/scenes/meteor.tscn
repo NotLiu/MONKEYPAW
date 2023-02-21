@@ -39,7 +39,7 @@ position = Vector2( 0, -21 )
 shape = SubResource( 1 )
 disabled = true
 
-[node name="Hitbox" type="Area2D" parent="." groups=["meteor"]]
+[node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 32
 collision_mask = 544
 script = ExtResource( 4 )

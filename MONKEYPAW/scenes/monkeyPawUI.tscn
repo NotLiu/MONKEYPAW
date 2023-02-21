@@ -8,6 +8,7 @@
 
 [node name="monkeyPawUI" type="CanvasLayer"]
 layer = 99
+visible = false
 script = ExtResource( 1 )
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
