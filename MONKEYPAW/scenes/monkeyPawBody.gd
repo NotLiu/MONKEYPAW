@@ -10,7 +10,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if inRange and Input.is_action_just_pressed("ui_accept"):
+	if inRange and Input.is_action_just_pressed("ui_accept") and pawUI.visible == false:
 		pawUI.generateExchanges()
 		pawUI.readExchange()
 		pawUI.visible = true
@@ -18,8 +18,6 @@ func _process(delta):
 func _on_Area2D_body_entered(body):
 	if body.name == "Player":
 		inRange = true
-
-
 
 func _on_Area2D_body_exited(body):
 	if body.name == "Player":

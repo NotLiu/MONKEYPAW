@@ -1,4 +1,5 @@
 extends KinematicBody2D
+signal shake
 
 var health = 500
 
@@ -125,6 +126,7 @@ func slam():
 		$meteorTimer.start()
 	else:
 		end_state()
+	emit_signal("shake")
 		
 func shoot():
 	#$shootCooldown.wait_time = SHOOTCOOLDOWN * (1 + rand_range(-0.25, 0.25))

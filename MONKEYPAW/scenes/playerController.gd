@@ -1,4 +1,5 @@
 extends KinematicBody2D
+signal shake
 
 var velocity = Vector2.ZERO
 export(int) var speed = 200.0
@@ -8,7 +9,7 @@ const dashDur = .1
 const dodgeDur = .1
 onready var dash = $Dash
 onready var jump = $Jump
-onready var BWshader= get_tree().get_root().get_node("Main/BlackAndWhite")
+onready var BWshader= get_tree().get_root().get_node("Main/Player/BlackAndWhite")
 
 var dir
 

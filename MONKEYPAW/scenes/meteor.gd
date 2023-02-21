@@ -1,4 +1,5 @@
 extends Node2D
+signal shake
 
 onready var meteor = get_node("meteor")
 # Declare member variables here. Examples:
@@ -43,6 +44,7 @@ func _on_Timer_timeout():
 	hurtbox.disabled = false
 	collision.disabled = false
 	$indicator.visible = false
+	emit_signal("shake")
 	#print("meteorPOS: ", position)
 
 

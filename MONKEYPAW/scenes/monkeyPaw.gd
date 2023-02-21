@@ -1,4 +1,4 @@
-extends Node2D
+extends CanvasLayer
 signal wish
 
 var wishes = ["guardianAngel", "aegis", "blessingOfPerseus", "timeSword", "deathWish", "homeBound", "blessingOfEir", "achillesHeel"]

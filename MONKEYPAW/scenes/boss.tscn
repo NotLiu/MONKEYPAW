@@ -139,14 +139,14 @@ extents = Vector2( 265.385, 28.4615 )
 radius = 70.0
 height = 115.385
 
-[node name="boss" type="KinematicBody2D"]
+[node name="boss" type="KinematicBody2D" groups=["boss"]]
 scale = Vector2( 1.3, 1.3 )
 script = ExtResource( 5 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 2
+frame = 3
 playing = true
 
 [node name="pupil" type="Sprite" parent="."]
