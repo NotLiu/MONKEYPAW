@@ -6,7 +6,10 @@
 [ext_resource path="res://assets/CARDBG.png" type="Texture" id=4]
 [ext_resource path="res://assets/cardFont.tres" type="DynamicFont" id=5]
 
-[node name="monkeyPawUI" type="Control"]
+[node name="monkeyPawUI" type="Node2D"]
+visible = false
+z_index = 99
+z_as_relative = false
 script = ExtResource( 1 )
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
@@ -86,4 +89,3 @@ text = "TEST
 scroll_active = false
 
 [connection signal="pressed" from="CLOSEUI" to="." method="_on_CLOSEUI_pressed"]
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

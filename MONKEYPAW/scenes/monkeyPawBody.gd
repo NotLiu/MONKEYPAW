@@ -12,6 +12,7 @@ func _ready():
 func _process(delta):
 	if inRange and Input.is_action_just_pressed("ui_accept"):
 		pawUI.generateExchanges()
+		pawUI.readExchange()
 		pawUI.visible = true
 
 func _on_Area2D_body_entered(body):

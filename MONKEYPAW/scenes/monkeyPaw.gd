@@ -1,4 +1,4 @@
-extends Control
+extends Node2D
 signal wish
 
 var wishes = ["guardianAngel", "aegis", "blessingOfPerseus", "timeSword", "deathWish", "homeBound", "blessingOfEir", "achillesHeel"]
@@ -73,11 +73,7 @@ func readExchange():
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if Input.is_action_just_pressed("ui_accept"):
-		generateExchanges()
-		readExchange()
-	if Input.is_key_pressed(KEY_R):
-		resetState()
+	pass
 
 func removeTable(value, array): #remove wishes/ costs from the pool
 	var index = array.find(value)
@@ -93,11 +89,11 @@ func makeWish(data):
 	$costCard/RichTextLabel.bbcode_text = "[center]"+data[1]+"[/center]"
 	$costCard/RichTextLabel2.bbcode_text = "[center]"+pawCostTable[data[1]]+"[/center]"
 	print(selected)
-	tw.tween_property($CenterContainer/HBoxContainer, "margin_top", 310.0, 0.15)
-	tw.tween_property($CenterContainer/HBoxContainer, "margin_top", 120.0, 0.75)
+	tw.tween_property($CenterContainer/HBoxContainer, "margin_top", 310.0, 0.10)
+	tw.tween_property($CenterContainer/HBoxContainer, "margin_top", 120.0, 0.6)
 	tw.set_parallel(true)
-	tw.tween_property(cards[(data[2]+1)%3], "modulate", Color(1,1,1,0), 1.5)
-	tw.tween_property(cards[(data[2]+2)%3], "modulate", Color(1,1,1,0), 1.5)
+	tw.tween_property(cards[(data[2]+1)%3], "modulate", Color(1,1,1,0), 0.9)
+	tw.tween_property(cards[(data[2]+2)%3], "modulate", Color(1,1,1,0), 0.9)
 	tw.set_parallel(false)
 	tw.tween_property($costCard, "modulate", Color(224.0/255.0, 60.0/255.0, 60.0/255.0, 1), 0.1)
 	tw.tween_property(cards[(data[2])%3], "modulate", Color(1,1,1,0), 0.1)
@@ -122,6 +118,7 @@ func resetState():
 	selected = 0
 	
 func _on_CLOSEUI_pressed():
+	print("CLOSE")
 	visible = false
 	resetState()
 

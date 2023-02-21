@@ -115,3 +115,4 @@ func _physics_process(delta):
 
 func _on_Hurtbox_area_entered(area):
 	print("player getting attacked")
+	pass

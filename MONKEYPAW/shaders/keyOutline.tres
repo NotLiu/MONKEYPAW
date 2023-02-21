@@ -1,0 +1,23 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=2]
+
+[ext_resource path="res://shaders/OutlineShader.tres" type="Shader" id=1]
+
+[sub_resource type="OpenSimplexNoise" id=1]
+octaves = 4
+period = 104.8
+persistence = 0.88
+lacunarity = 2.72
+
+[sub_resource type="NoiseTexture" id=2]
+width = 50
+height = 50
+seamless = true
+noise = SubResource( 1 )
+
+[resource]
+shader = ExtResource( 1 )
+shader_param/outline_width = -7.0
+shader_param/warp_slow = 3.0
+shader_param/outline_color = Color( 0.988235, 0.968627, 1, 1 )
+shader_param/noiseOffset = 0.0
+shader_param/noise = SubResource( 2 )

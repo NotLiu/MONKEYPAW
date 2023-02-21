@@ -35,7 +35,7 @@ shape = SubResource( 1 )
 [node name="Area2D" type="Area2D" parent="HitboxPivot"]
 position = Vector2( 50, -10 )
 collision_layer = 0
-collision_mask = 16
+collision_mask = 528
 script = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxPivot/Area2D"]
