@@ -2,7 +2,7 @@ extends KinematicBody2D
 signal shake
 
 var health = 100
-onready var healthBar = $Camera2D/healthBar/ProgressBar
+onready var healthBar = $CanvasLayer/healthBar/ProgressBar
 
 var velocity = Vector2.ZERO
 export(int) var speed = 200.0
