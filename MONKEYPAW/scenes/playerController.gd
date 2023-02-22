@@ -1,7 +1,6 @@
 extends KinematicBody2D
 signal shake
 
-var health = 100
 onready var healthBar = $CanvasLayer/healthBar/ProgressBar
 
 var velocity = Vector2.ZERO
@@ -14,7 +13,24 @@ onready var dash = $Dash
 onready var jump = $Jump
 onready var BWshader= get_tree().get_root().get_node("Main/Player/BlackAndWhite")
 
+export var maxHealth = 150
+var health = maxHealth
+var revive = false
+
+var knockbackModifier: float = 5
+var blockKnockBackModifier: float = 2
+var blockDmgModifier = 0.3
+
 var isAttacking = false
+var isBlocking = false
+
+#wishes
+var reflectDmg = false
+var timeSword = false
+var achillesHeel = false
+
+onready var timeSwordProj = preload("res://scenes/playerProjectile.tscn")
+
 
 var dir
 
@@ -82,7 +98,12 @@ func _physics_process(delta):
 
 	# press A to attack
 	if (abilities["attack"]):
-		if Input.is_action_just_pressed("attack"):
+		if Input.is_action_pressed("attack"):
+			if timeSword:
+				print("TIMESWORD")
+				var projInstance = timeSwordProj.instance()
+				projInstance.global_position = self.global_position
+				get_tree().get_root().add_child(projInstance)
 			$AnimationTree.set("parameters/movement/current", 2)
 			#$HitboxPivot/Area2D/CollisionShape2D.disabled = false
 			isAttacking = true
@@ -97,9 +118,11 @@ func _physics_process(delta):
 	# press S to block
 	if (abilities["block"]):
 		if Input.is_action_pressed("block"):
+			isBlocking = true
 			$AnimationTree.set("parameters/movement/current", 3)
 			$BlockPivot/Area2D/CollisionShape2D.disabled = false
 		else:
+			isBlocking = false
 			$BlockPivot/Area2D/CollisionShape2D.disabled = true	
 	# press L_SHIFT to dash
 	if (abilities["dash"]):
@@ -138,15 +161,44 @@ func _physics_process(delta):
 		# set sword hitbox knockback vector
 		swordHitBox.knockback_vector = velocity
 
-
-
-func _on_Hurtbox_area_entered(area):
-	print("player getting attacked")
-	emit_signal("shake")
-	health -= 10
-	healthBar.value -= 10
+func takeDamage(dmg, dmgSource):
+	if dmgSource.has_method("take_damage") and reflectDmg:
+		dmgSource.take_damage(dmg)
+	if isBlocking:
+		health -= int(dmg * blockDmgModifier) 
+	else:
+		health -= dmg
+    healthBar.value -= 10
+	if health <= 0 and revive:
+		revive = false
+		health = maxHealth/2
 	if (health <= 0):
 		LevelManager.restart()
 		health = 100
 		healthBar.value = 100
-	pass
+
+func receiveKnockback(sourcePos, dmg, modifier):
+	var knockbackDir = sourcePos.direction_to(self.global_position)
+	var knockbackStr = dmg * modifier
+	var knockback = knockbackDir * knockbackStr
+	global_position += knockback
+	
+func _on_Hurtbox_area_entered(area):
+	print("player getting attacked")
+	if achillesHeel == true and area.get_parent().dmgType == "env":
+		takeDamage(30,area.get_parent())
+	elif achillesHeel != true:
+		takeDamage(10,area.get_parent())
+		
+	print(isBlocking)
+	if isBlocking:
+		receiveKnockback(area.global_position, 10, blockKnockBackModifier)
+	else:
+		receiveKnockback(area.global_position, 10, knockbackModifier)
+	emit_signal("shake")
+
+func _on_Area2D_body_entered(body):
+	print("ATTACK BLOCKED")
+	takeDamage(10, body)
+	receiveKnockback(body.global_position, 10 * blockDmgModifier, blockKnockBackModifier)
+

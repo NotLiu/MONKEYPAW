@@ -26,6 +26,7 @@ func _process(delta):
 	if player != null and playerConnected == false:
 		player.connect("shake", self, "requestShake")
 		playerConnected = true
+		
 func checkWish(data):
 	print("WISH: ",data)
 	player.abilities[data[1]] = false
@@ -34,7 +35,30 @@ func checkWish(data):
 		$Player/Light2D.visible = false
 	else:
 		$Player/Light2D.visible = true
-
+		
+	if data[0] == "guardianAngel": #if choose wish guardian angel enable revive
+		print("REVIVE ENABLED")
+		player.revive = true
+	elif data[0] == "aegis":
+		print("AEGIS EQUIPPED")
+		player.blockKnockBackModifier = 0.0
+		player.blockDmgModifier = 0.0
+	elif data[0] == "blessingOfPerseus":
+		print("REFLECTING")
+		player.reflectDmg = true
+	elif data[0] == "timeSword":
+		print("TIMESWORDING")
+		player.timeSword = true
+	elif data[0] == "homeBound":
+		print("HOMEBOUND")
+		get_tree().change_scene("res://scenes/home.tscn")
+	elif data[0] == "blessingOfEir":
+		print("GET MECHANIC BACK")
+		player.abilities[data[-1]] = true #restore mechanic
+	elif data[0] == "achillesHeel":
+		print("HEEL IS ACHILLES'D")
+		player.achillesHeel = true
+		player.knockbackModifier = 10
 func requestShake():
 	print("shake request")
 	emit_signal("shake_request")
