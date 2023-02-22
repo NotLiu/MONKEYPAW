@@ -21,4 +21,6 @@ func _process(delta):
 
 
 func _on_Hitbox_area_entered(area):
+	if area.get_parent().get_parent().name == "Player":
+		area.get_parent().get_parent().takeDamage(10, self)
 	queue_free()

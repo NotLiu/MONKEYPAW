@@ -3,7 +3,7 @@ signal shake
 
 var health = 500
 
-export var numMeteors = 0
+export var numMeteors = 5
 var meteorOnScreen = 0
 var slamStarted = false
 
@@ -75,6 +75,7 @@ func _physics_process(delta):
 			if sprite.animation != "hit" or sprite.frame == 2:
 				sprite.animation = "slam"
 			if not transitionTrigger and slamStarted == false:
+				print("IM SLAMMMMMMIING")
 				slamStarted = true
 				slam()
 		states.SWIPE:
@@ -122,7 +123,7 @@ func slam():
 	if meteorOnScreen < numMeteors:
 		var mtr = meteor.instance()
 		mtr.global_position = player.global_position
-		mtr.z_index = mtr.position[1]*0.1
+		mtr.z_index = 29 + mtr.position[1]*0.1
 		get_parent().add_child(mtr)
 		print(mtr)
 		meteorOnScreen += 1

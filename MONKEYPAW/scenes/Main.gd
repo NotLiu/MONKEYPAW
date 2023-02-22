@@ -6,6 +6,7 @@ onready var player = get_node("Player")
 var wishes = 0
 
 var meteors = []
+var boss = []
 var bossConnected = false
 var playerConnected = false
 # Called when the node enters the scene tree for the first time.
@@ -22,8 +23,9 @@ func _process(delta):
 		meteors = get_tree().get_nodes_in_group("meteor")
 		for mtr in meteors:
 			mtr.connect("shake", self, "requestShake")
-	if $boss != null and bossConnected == false:
-		$boss.connect("shake", self, "requestShake")
+	if get_tree().get_nodes_in_group("boss") != boss and bossConnected == false:
+		boss = get_tree().get_nodes_in_group("boss")
+		boss[0].connect("shake", self, "requestShake")
 		bossConnected = true
 	if player != null and playerConnected == false:
 		player.connect("shake", self, "requestShake")

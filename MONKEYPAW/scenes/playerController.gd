@@ -19,7 +19,7 @@ var revive = false
 
 var knockbackModifier: float = 5
 var blockKnockBackModifier: float = 2
-var blockDmgModifier = 0.3
+var blockDmgModifier = 0.2
 
 var isAttacking = false
 var isBlocking = false
