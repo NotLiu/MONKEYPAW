@@ -18,10 +18,11 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if (level_complete()):
-		toggleTrigger(true)
-	else:
-		toggleTrigger(false)
+	#if (level_complete()):
+		#toggleTrigger(true)
+	#else:
+		#toggleTrigger(false)
+	pass
 
 func level_complete():
 	return curr_enemies == 0
@@ -33,7 +34,7 @@ func toggleTrigger(val):
 
 func load_next_level():
 	# Remove the current level
-	var level = root.get_node(levels[curr_level])
+	var level = root.get_node("Main/" + levels[curr_level])
 	root.remove_child(level)
 	level.call_deferred("free")
 
@@ -41,6 +42,6 @@ func load_next_level():
 	if (curr_level <= (len(levels) - 2)):
 		curr_level += 1
 		curr_enemies = num_enemies[curr_level]
-		var next_level_resource = load("res://path/to/" + curr_level + ".tscn")
+		var next_level_resource = load("res://scenes/" + levels[curr_level] + ".tscn")
 		var next_level = next_level_resource.instance()
-		root.add_child(next_level)
+		root.get_node("Main").add_child(next_level)
