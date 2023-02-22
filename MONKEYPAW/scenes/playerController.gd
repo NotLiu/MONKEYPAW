@@ -81,12 +81,16 @@ func _physics_process(delta):
 	if (abilities["attack"]):
 		if Input.is_action_pressed("attack"):
 			$AnimationTree.set("parameters/movement/current", 2)
+			#$HitboxPivot/Area2D/CollisionShape2D.disabled = false
 			isAttacking = true
 			yield(get_tree().create_timer(0.6), "timeout")
 			isAttacking = false
-			$HitboxPivot/Area2D/CollisionShape2D.disabled = false
-		else:
-			$HitboxPivot/Area2D/CollisionShape2D.disabled = true
+		#else:
+			#$HitboxPivot/Area2D/CollisionShape2D.disabled = true
+	if (isAttacking):
+		$HitboxPivot/Area2D/CollisionShape2D.disabled = false
+	else:
+		$HitboxPivot/Area2D/CollisionShape2D.disabled = true
 	# press S to block
 	if (abilities["block"]):
 		if Input.is_action_pressed("block"):
