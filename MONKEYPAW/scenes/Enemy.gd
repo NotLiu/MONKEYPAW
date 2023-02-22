@@ -108,6 +108,8 @@ func take_damage(dmg):
 	print("enemy hit! ", health)
 	
 	if (health <= 0):
+		LevelManager.curr_enemies -= 1
+		print(LevelManager.curr_enemies)
 		queue_free()
 
 func attack():
