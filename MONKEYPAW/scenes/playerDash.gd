@@ -16,6 +16,7 @@ func startDash(dur, action):
 		player.modulate.a = 0.1
 		player.get_node("Hurtbox").visible = false
 		dodge = true
+	#player.get_node("AnimationTree").set("parameters/movement/current", 4)
 	
 func isDashing():
 	return !durTimer.is_stopped()
