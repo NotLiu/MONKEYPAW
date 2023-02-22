@@ -162,7 +162,7 @@ nodes/output/position = Vector2( 900, 200 )
 node_connections = [ "output", 0, "movement", "movement", 0, "Animation", "movement", 1, "Animation 2", "movement", 2, "Animation 3", "movement", 3, "Animation 4", "movement", 4, "Animation 5" ]
 
 [node name="Player" type="KinematicBody2D" groups=["player"]]
-position = Vector2( 500, 300 )
+scale = Vector2( 1.5, 1.5 )
 collision_layer = 64
 script = ExtResource( 2 )
 
