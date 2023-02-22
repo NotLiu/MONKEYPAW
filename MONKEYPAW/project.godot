@@ -17,6 +17,7 @@ config/icon="res://icon.png"
 [autoload]
 
 MonkeyPawUi="*res://scenes/monkeyPawUI.tscn"
+LevelManager="*res://scenes/LevelManager.tscn"
 
 [display]
 
