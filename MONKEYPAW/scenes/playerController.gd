@@ -22,6 +22,8 @@ var blockDmgModifier = 0.3
 var isAttacking = false
 var isBlocking = false
 
+var reflectDmg = false
+
 var dir
 
 var abilities = {
@@ -146,7 +148,9 @@ func _physics_process(delta):
 		# set sword hitbox knockback vector
 		swordHitBox.knockback_vector = velocity
 
-func takeDamage(dmg):
+func takeDamage(dmg, dmgSource):
+	if dmgSource.has_method("take_damage") and reflectDmg:
+		dmgSource.take_damage(dmg)
 	if isBlocking:
 		health -= int(dmg * blockDmgModifier) 
 	else:
@@ -163,7 +167,7 @@ func receiveKnockback(sourcePos, dmg, modifier):
 	
 func _on_Hurtbox_area_entered(area):
 	print("player getting attacked")
-	takeDamage(10)
+	takeDamage(10,area.get_parent())
 	print(isBlocking)
 	if isBlocking:
 		receiveKnockback(area.global_position, 10, blockKnockBackModifier)
@@ -173,5 +177,5 @@ func _on_Hurtbox_area_entered(area):
 
 func _on_Area2D_body_entered(body):
 	print("ATTACK BLOCKED")
-	takeDamage(10)
+	takeDamage(10, body)
 	receiveKnockback(body.global_position, 10 * blockDmgModifier, blockKnockBackModifier)

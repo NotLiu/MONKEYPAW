@@ -43,6 +43,8 @@ func checkWish(data):
 		print("AEGIS EQUIPPED")
 		player.blockKnockBackModifier = 0.0
 		player.blockDmgModifier = 0.0
+	elif data[0] == "blessingOfPerseus":
+		player.reflectDmg = true
 		
 func requestShake():
 	print("shake request")
