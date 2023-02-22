@@ -36,6 +36,7 @@ var attackTimerTriggered = false
 export var attackTimerInterval = 1.5 # time before it transitions from surround to attack
 export var ATTACK_INTERVAL = 1
 var isAttacking = false
+var dmgType = "melee"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

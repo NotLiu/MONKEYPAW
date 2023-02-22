@@ -55,7 +55,10 @@ func checkWish(data):
 	elif data[0] == "blessingOfEir":
 		print("GET MECHANIC BACK")
 		player.abilities[data[-1]] = true #restore mechanic
-	elif data[0] == "achillesHeel"
+	elif data[0] == "achillesHeel":
+		print("HEEL IS ACHILLES'D")
+		player.achillesHeel = true
+		player.knockbackModifier = 10
 func requestShake():
 	print("shake request")
 	emit_signal("shake_request")

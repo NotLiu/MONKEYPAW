@@ -17,7 +17,8 @@ noise = SubResource( 1 )
 [resource]
 shader = ExtResource( 1 )
 shader_param/outline_width = -7.0
+shader_param/outline_scalar = 1.0
 shader_param/warp_slow = 3.0
-shader_param/outline_color = Color( 0.988235, 0.968627, 1, 1 )
+shader_param/outline_color = Color( 0.870588, 0.352941, 0.352941, 1 )
 shader_param/noiseOffset = 0.0
 shader_param/noise = SubResource( 2 )

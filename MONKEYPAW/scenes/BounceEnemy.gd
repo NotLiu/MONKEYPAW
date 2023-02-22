@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 
 var health = 100
-
+var dmgType = "melee"
 # movement
 var velocity = Vector2.ZERO
 export var FRICTION = 200

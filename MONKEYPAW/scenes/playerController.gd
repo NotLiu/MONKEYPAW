@@ -25,6 +25,8 @@ var isBlocking = false
 #wishes
 var reflectDmg = false
 var timeSword = false
+var achillesHeel = false
+
 onready var timeSwordProj = preload("res://scenes/playerProjectile.tscn")
 
 
@@ -176,7 +178,11 @@ func receiveKnockback(sourcePos, dmg, modifier):
 	
 func _on_Hurtbox_area_entered(area):
 	print("player getting attacked")
-	takeDamage(10,area.get_parent())
+	if achillesHeel == true and area.get_parent().dmgType == "env":
+		takeDamage(30,area.get_parent())
+	elif achillesHeel != true:
+		takeDamage(10,area.get_parent())
+		
 	print(isBlocking)
 	if isBlocking:
 		receiveKnockback(area.global_position, 10, blockKnockBackModifier)

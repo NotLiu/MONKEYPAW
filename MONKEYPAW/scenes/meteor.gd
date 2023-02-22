@@ -11,6 +11,7 @@ onready var hurtbox = get_node("Hurtbox/CollisionShape2D")
 
 var knockback_vector = Vector2(0.0, 0.0)
 
+
 var fallTime = 0.8
 var knockback = 500.0
 

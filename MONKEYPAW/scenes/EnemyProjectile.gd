@@ -5,6 +5,7 @@ extends KinematicBody2D
 var direction : Vector2 = Vector2.LEFT
 var speed : float = 250
 var lifetime : float = 20
+var dmgType = "projectile"
 
 onready var timer = $Timer
 
