@@ -11,6 +11,8 @@ onready var root = get_tree().get_root()
 onready var NextLevelTriggerSprite = get_tree().get_root().get_node("Main/NextLevelTrigger/Sprite")
 onready var NextLevelTriggerCollision = get_tree().get_root().get_node("Main/NextLevelTrigger/Area2D/CollisionShape2D")
 
+signal zero_enemies
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -19,34 +21,38 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	#if (level_complete()):
-	if (curr_enemies == 0):
 		#toggleTrigger(true)
-		NextLevelTriggerSprite.visible = true
-	else:
-		NextLevelTriggerSprite.visible = false
-		toggleTrigger(false)
-	print(NextLevelTriggerSprite.visible)
-	print(curr_enemies)
+	#else:
+		#toggleTrigger(false)
+	if (level_complete()):
+		emit_signal("zero_enemies")
+		
+	pass
 
 func level_complete():
 	return curr_enemies == 0
 
 func toggleTrigger(val):
-	#NextLevelTriggerSprite.visible = val
-	#print(NextLevelTriggerSprite.visible)
+	NextLevelTriggerSprite.visible = val
 	NextLevelTriggerCollision.disabled = !val
 	
 
 func load_next_level():
 	# Remove the current level
-	var level = root.get_node(levels[curr_level])
+	var level = root.get_node("Main/" + levels[curr_level])
 	root.remove_child(level)
 	level.call_deferred("free")
+
+	toggleTrigger(false)
 
 	# Add the next level
 	if (curr_level <= (len(levels) - 2)):
 		curr_level += 1
 		curr_enemies = num_enemies[curr_level]
-		var next_level_resource = load("res://path/to/" + curr_level + ".tscn")
+		var next_level_resource = load("res://scenes/" + levels[curr_level] + ".tscn")
 		var next_level = next_level_resource.instance()
-		root.add_child(next_level)
+		root.get_node("Main").add_child(next_level)
+
+
+func _on_LevelManager_zero_enemies():
+	toggleTrigger(true)
