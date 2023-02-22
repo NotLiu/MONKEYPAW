@@ -44,7 +44,11 @@ func checkWish(data):
 		player.blockKnockBackModifier = 0.0
 		player.blockDmgModifier = 0.0
 	elif data[0] == "blessingOfPerseus":
+		print("REFLECTING")
 		player.reflectDmg = true
+	elif data[0] == "timeSword":
+		print("TIMESWORDING")
+		player.timeSword = true
 		
 func requestShake():
 	print("shake request")

@@ -49,8 +49,7 @@ func _ready():
 #	pass
 
 func _physics_process(delta):
-	knockback = knockback.move_toward(Vector2.ZERO, FRICTION * delta)
-	knockback = move_and_slide(knockback)
+	knockback = knockback.move_toward(Vector2.ZERO, FRICTION * delta * 1000)
 	
 	match state:
 		IDLE:
@@ -92,7 +91,7 @@ func _physics_process(delta):
 			else:
 				state = SURROUND
 				
-	velocity = move_and_slide(velocity)
+	velocity = move_and_slide(velocity + knockback)
 			
 func seek_player():
 	if PlayerDetectionZone.can_see_player():

@@ -22,7 +22,11 @@ var blockDmgModifier = 0.3
 var isAttacking = false
 var isBlocking = false
 
+#wishes
 var reflectDmg = false
+var timeSword = false
+onready var timeSwordProj = preload("res://scenes/playerProjectile.tscn")
+
 
 var dir
 
@@ -91,6 +95,11 @@ func _physics_process(delta):
 	# press A to attack
 	if (abilities["attack"]):
 		if Input.is_action_pressed("attack"):
+			if timeSword:
+				print("TIMESWORD")
+				var projInstance = timeSwordProj.instance()
+				projInstance.global_position = self.global_position
+				get_tree().get_root().add_child(projInstance)
 			$AnimationTree.set("parameters/movement/current", 2)
 			#$HitboxPivot/Area2D/CollisionShape2D.disabled = false
 			isAttacking = true
