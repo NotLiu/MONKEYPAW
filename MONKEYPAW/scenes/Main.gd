@@ -27,6 +27,11 @@ func _process(delta):
 		player.connect("shake", self, "requestShake")
 		playerConnected = true
 		
+	if Input.is_action_just_pressed("debug1") and get_node("/root/LevelManager").curr_level != 4:
+		get_node("/root/LevelManager").skipToEnd()
+	if Input.is_action_just_pressed("debug2") and get_node("/root/LevelManager").curr_level != 4:
+		get_node("/root/LevelManager").skipNextLevel()	
+	
 func checkWish(data):
 	print("WISH: ",data)
 	player.abilities[data[1]] = false
@@ -49,6 +54,9 @@ func checkWish(data):
 	elif data[0] == "timeSword":
 		print("TIMESWORDING")
 		player.timeSword = true
+	elif data[0] == "deathWish":
+		print("SKIPBOSS")
+		$LevelManager.skipToEnd()
 	elif data[0] == "homeBound":
 		print("HOMEBOUND")
 		get_tree().change_scene("res://scenes/home.tscn")

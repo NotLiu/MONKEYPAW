@@ -177,6 +177,7 @@ func takeDamage(dmg, dmgSource):
 		revive = false
 		health = maxHealth/2
 	if (health <= 0):
+		print("DIED")
 		LevelManager.restart()
 		health = 100
 		healthBar.value = maxHealth

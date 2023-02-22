@@ -14,7 +14,7 @@ radius = 605.013
 [sub_resource type="CircleShape2D" id=5]
 radius = 43.0029
 
-[node name="RangedEnemyK" type="KinematicBody2D"]
+[node name="RangedEnemyK" type="KinematicBody2D" groups=["enemy"]]
 collision_layer = 256
 collision_mask = 321
 script = ExtResource( 1 )

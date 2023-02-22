@@ -88,6 +88,9 @@ func target_player(delta):
 		AttackTimer.stop()
 		
 func take_damage(dmg):
+	var tw = create_tween()
+	tw.tween_property(self, "modulate", Color(1,0,0,1), 0.2)
+	tw.tween_property(self, "modulate", Color(1,1,1,1), 0.2)
 	$AnimationTree.set("parameters/movement/current", 2)
 	health -= dmg
 	

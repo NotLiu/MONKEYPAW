@@ -163,6 +163,7 @@ node_connections = [ "output", 0, "movement", "movement", 0, "Animation", "movem
 
 [node name="Player" type="KinematicBody2D" groups=["player"]]
 scale = Vector2( 1.5, 1.5 )
+z_index = 15
 collision_layer = 64
 script = ExtResource( 2 )
 

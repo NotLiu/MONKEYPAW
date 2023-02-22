@@ -7,21 +7,26 @@
 [node name="Level4" type="Node2D"]
 
 [node name="RadialEnemy" parent="." instance=ExtResource( 2 )]
+visible = false
 position = Vector2( 1011, -463 )
 rotation = -0.000227064
 
 [node name="RangedEnemyK2" parent="." instance=ExtResource( 1 )]
+visible = false
 position = Vector2( 499, -802 )
 rotation = -0.000227064
 
 [node name="RangedEnemyK" parent="." instance=ExtResource( 1 )]
+visible = false
 position = Vector2( -10, -492 )
 rotation = -0.000227064
 
 [node name="Enemy" parent="." instance=ExtResource( 5 )]
+visible = false
 position = Vector2( 541, -135 )
 rotation = -0.000227064
 
 [node name="Enemy2" parent="." instance=ExtResource( 5 )]
+visible = false
 position = Vector2( -129, -85 )
 rotation = -0.000227064

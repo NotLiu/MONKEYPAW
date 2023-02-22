@@ -102,6 +102,9 @@ func _physics_process(delta):
 
 
 func take_damage(dmg):
+	var tw = create_tween()
+	tw.tween_property(self, "modulate", Color(1,0,0,1), 0.2)
+	tw.tween_property(self, "modulate", Color(1,1,1,1), 0.2)
 	health -= dmg
 	
 	print("enemy hit ", health)
