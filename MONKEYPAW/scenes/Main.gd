@@ -35,11 +35,14 @@ func checkWish(data):
 		$Player/Light2D.visible = false
 	else:
 		$Player/Light2D.visible = true
-	if data[1] == "guardianAngel": #if choose wish guardian angel enable revive
+		
+	if data[0] == "guardianAngel": #if choose wish guardian angel enable revive
 		print("REVIVE ENABLED")
 		player.revive = true
-	elif data[1] == "aegis":
+	elif data[0] == "aegis":
 		print("AEGIS EQUIPPED")
+		player.blockKnockBackModifier = 0.0
+		player.blockDmgModifier = 0.0
 		
 func requestShake():
 	print("shake request")

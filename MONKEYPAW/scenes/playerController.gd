@@ -15,10 +15,12 @@ export var maxHealth = 150
 var health = maxHealth
 var revive = false
 
-var knockbackModifier: float = 0.2
-var blockKnockBackModifier: float = 0.1
+var knockbackModifier: float = 5
+var blockKnockBackModifier: float = 2
+var blockDmgModifier = 0.3
 
 var isAttacking = false
+var isBlocking = false
 
 var dir
 
@@ -101,9 +103,11 @@ func _physics_process(delta):
 	# press S to block
 	if (abilities["block"]):
 		if Input.is_action_pressed("block"):
+			isBlocking = true
 			$AnimationTree.set("parameters/movement/current", 3)
 			$BlockPivot/Area2D/CollisionShape2D.disabled = false
 		else:
+			isBlocking = false
 			$BlockPivot/Area2D/CollisionShape2D.disabled = true	
 	# press L_SHIFT to dash
 	if (abilities["dash"]):
@@ -143,21 +147,31 @@ func _physics_process(delta):
 		swordHitBox.knockback_vector = velocity
 
 func takeDamage(dmg):
-	health -= dmg
+	if isBlocking:
+		health -= int(dmg * blockDmgModifier) 
+	else:
+		health -= dmg
 	if health <= 0 and revive:
 		revive = false
 		health = maxHealth/2
 
-func receiveKnockback(sourcePos):
-	pass
-
+func receiveKnockback(sourcePos, dmg, modifier):
+	var knockbackDir = sourcePos.direction_to(self.global_position)
+	var knockbackStr = dmg * modifier
+	var knockback = knockbackDir * knockbackStr
+	global_position += knockback
+	
 func _on_Hurtbox_area_entered(area):
 	print("player getting attacked")
 	takeDamage(10)
-	receiveKnockback(area.position)
-	print(area.global_position)
+	print(isBlocking)
+	if isBlocking:
+		receiveKnockback(area.global_position, 10, blockKnockBackModifier)
+	else:
+		receiveKnockback(area.global_position, 10, knockbackModifier)
 	emit_signal("shake")
-	pass
 
-func _on_Block_entered():
+func _on_Area2D_body_entered(body):
 	print("ATTACK BLOCKED")
+	takeDamage(10)
+	receiveKnockback(body.global_position, 10 * blockDmgModifier, blockKnockBackModifier)
