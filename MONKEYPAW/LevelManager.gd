@@ -34,11 +34,11 @@ func level_complete():
 
 func toggleTrigger(val):
 	NextLevelTriggerSprite.visible = val
-	NextLevelTriggerCollision.disabled = !val
+	NextLevelTriggerCollision.set_deferred("disabled", !val)
 	
 func restart():
 	var level = root.get_node("Main/" + levels[curr_level])
-	root.remove_child(level)
+	root.get_node("Main").remove_child(level)
 	level.call_deferred("free")
 	
 	toggleTrigger(false)
@@ -52,7 +52,7 @@ func restart():
 func load_next_level():
 	# Remove the current level
 	var level = root.get_node("Main/" + levels[curr_level])
-	root.remove_child(level)
+	root.get_node("Main").remove_child(level)
 	level.call_deferred("free")
 
 	toggleTrigger(false)
