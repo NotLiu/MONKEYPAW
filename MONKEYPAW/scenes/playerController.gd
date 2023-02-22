@@ -145,4 +145,8 @@ func _on_Hurtbox_area_entered(area):
 	emit_signal("shake")
 	health -= 10
 	healthBar.value -= 10
+	if (health <= 0):
+		LevelManager.restart()
+		health = 100
+		healthBar.value = 100
 	pass

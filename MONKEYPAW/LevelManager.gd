@@ -36,6 +36,18 @@ func toggleTrigger(val):
 	NextLevelTriggerSprite.visible = val
 	NextLevelTriggerCollision.disabled = !val
 	
+func restart():
+	var level = root.get_node("Main/" + levels[curr_level])
+	root.remove_child(level)
+	level.call_deferred("free")
+	
+	toggleTrigger(false)
+	
+	curr_level = 0 
+	curr_enemies = num_enemies[curr_level]
+	var restart_level_resource = load("res://scenes/Level1.tscn")
+	var restart_level = restart_level_resource.instance()
+	root.get_node("Main").add_child(restart_level)
 
 func load_next_level():
 	# Remove the current level
