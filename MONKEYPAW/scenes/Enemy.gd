@@ -52,6 +52,7 @@ func _ready():
 func _physics_process(delta):
 	knockback = knockback.move_toward(Vector2.ZERO, FRICTION * delta * 1000)
 	
+	
 	match state:
 		IDLE:
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
@@ -105,6 +106,9 @@ func triggerAttackTimer():
 
 func take_damage(dmg):
 	health -= dmg
+	var tw = create_tween()
+	tw.tween_property(self, "modulate", Color(1,0,0,1), 0.2)
+	tw.tween_property(self, "modulate", Color(1,1,1,1), 0.2)
 	print("enemy hit! ", health)
 	
 	if (health <= 0):
@@ -144,6 +148,7 @@ func get_circle_position(target, random):
 func _on_Hurtbox_area_entered(area):
 	take_damage(20) # change this number based on player mayhaps
 	knockback = area.knockback_vector * KNOCKBACK_FORCE
+	
 
 
 func _on_AttackTimer_timeout():

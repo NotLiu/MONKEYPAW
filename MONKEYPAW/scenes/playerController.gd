@@ -4,7 +4,7 @@ signal shake
 onready var healthBar = $CanvasLayer/healthBar/ProgressBar
 
 var velocity = Vector2.ZERO
-export(int) var speed = 200.0
+export(int) var speed = 400.0
 const origSpeed = 200.0
 const dashSpeed = 1200.0
 const dashDur = .1
@@ -13,7 +13,7 @@ onready var dash = $Dash
 onready var jump = $Jump
 onready var BWshader= get_tree().get_root().get_node("Main/Player/BlackAndWhite")
 
-export var maxHealth = 150
+export var maxHealth:float = 150
 var health = maxHealth
 var revive = false
 
@@ -51,6 +51,7 @@ func _ready():
 	#pass # Replace with function body.
 
 func _physics_process(delta):
+	modulate = Color(1,1,1,1)
 	velocity = Vector2.ZERO
 	if Input.is_action_pressed("ui_right"):
 		if (!isAttacking):
@@ -162,20 +163,23 @@ func _physics_process(delta):
 		swordHitBox.knockback_vector = velocity
 
 func takeDamage(dmg, dmgSource):
+	var tw = create_tween()
+	tw.tween_property(self, "modulate", Color(1,0,0,1), 0.2)
+	tw.tween_property(self, "modulate", Color(1,1,1,1), 0.2)
 	if dmgSource.has_method("take_damage") and reflectDmg:
 		dmgSource.take_damage(dmg)
 	if isBlocking:
 		health -= int(dmg * blockDmgModifier) 
 	else:
 		health -= dmg
-    healthBar.value -= 10
+	healthBar.value -= dmg/maxHealth*100
 	if health <= 0 and revive:
 		revive = false
 		health = maxHealth/2
 	if (health <= 0):
 		LevelManager.restart()
 		health = 100
-		healthBar.value = 100
+		healthBar.value = maxHealth
 
 func receiveKnockback(sourcePos, dmg, modifier):
 	var knockbackDir = sourcePos.direction_to(self.global_position)

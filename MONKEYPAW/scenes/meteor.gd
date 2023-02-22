@@ -55,6 +55,9 @@ func _on_Hitbox_area_entered(area):
 
 
 func _on_Hurtbox_area_entered(area):
+	var tw = create_tween()
+	tw.tween_property(self, "modulate", Color(1,0,0,1), 0.2)
+	tw.tween_property(self, "modulate", Color(1,1,1,1), 0.2)
 	hitTimes += 1
 	print(hitTimes)
 	
