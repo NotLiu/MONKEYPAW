@@ -88,6 +88,7 @@ func target_player(delta):
 		AttackTimer.stop()
 		
 func take_damage(dmg):
+	$AnimationTree.set("parameters/movement/current", 2)
 	health -= dmg
 	
 	if (health <= 0):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://scenes/Hitbox.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/boar_runANDhit.png" type="Texture" id=2]
@@ -39,6 +39,21 @@ tracks/0/keys = {
 "values": [ 0 ]
 }
 
+[sub_resource type="Animation" id=14]
+resource_name = "hit"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+
 [sub_resource type="Animation" id=11]
 resource_name = "idle"
 tracks/0/type = "value"
@@ -74,26 +89,33 @@ tracks/0/keys = {
 [sub_resource type="AnimationNodeAnimation" id=12]
 animation = "idle"
 
+[sub_resource type="AnimationNodeAnimation" id=15]
+animation = "hit"
+
 [sub_resource type="AnimationNodeAnimation" id=9]
 animation = "run"
 
 [sub_resource type="AnimationNodeTransition" id=13]
-input_count = 2
+input_count = 3
 input_0/name = "idle"
 input_0/auto_advance = false
 input_1/name = "run"
 input_1/auto_advance = false
+input_2/name = "hit"
+input_2/auto_advance = false
 
 [sub_resource type="AnimationNodeBlendTree" id=10]
-graph_offset = Vector2( 41.1245, 113.506 )
+graph_offset = Vector2( 38.1245, 198.506 )
 nodes/Animation/node = SubResource( 9 )
-nodes/Animation/position = Vector2( 420, 260 )
+nodes/Animation/position = Vector2( 360, 260 )
 "nodes/Animation 2/node" = SubResource( 12 )
 "nodes/Animation 2/position" = Vector2( 420, 140 )
+"nodes/Animation 3/node" = SubResource( 15 )
+"nodes/Animation 3/position" = Vector2( 380, 380 )
 nodes/movement/node = SubResource( 13 )
 nodes/movement/position = Vector2( 600, 180 )
 nodes/output/position = Vector2( 800, 140 )
-node_connections = [ "movement", 0, "Animation 2", "movement", 1, "Animation", "output", 0, "movement" ]
+node_connections = [ "movement", 0, "Animation 2", "movement", 1, "Animation", "movement", 2, "Animation 3", "output", 0, "movement" ]
 
 [node name="BounceEnemy" type="KinematicBody2D"]
 collision_layer = 512
@@ -147,6 +169,7 @@ shape = SubResource( 6 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Sprite")
 anims/RESET = SubResource( 7 )
+anims/hit = SubResource( 14 )
 anims/idle = SubResource( 11 )
 anims/run = SubResource( 8 )
 
