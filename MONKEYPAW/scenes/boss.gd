@@ -3,7 +3,7 @@ signal shake
 
 var health = 500
 
-export var numMeteors = 5
+export var numMeteors = 25
 var meteorOnScreen = 0
 var slamStarted = false
 
@@ -123,7 +123,7 @@ func slam():
 	if meteorOnScreen < numMeteors:
 		var mtr = meteor.instance()
 		mtr.global_position = player.global_position
-		mtr.z_index = 29 + mtr.position[1]*0.1
+		mtr.z_index = max(50 + mtr.position[1]*0.1, 5.0)
 		get_parent().add_child(mtr)
 		print(mtr)
 		meteorOnScreen += 1

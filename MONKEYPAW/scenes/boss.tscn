@@ -127,7 +127,7 @@ radius = 91.5385
 height = 63.077
 
 [sub_resource type="CircleShape2D" id=30]
-radius = 196.883
+radius = 458.467
 
 [sub_resource type="CircleShape2D" id=29]
 radius = 83.8497
@@ -146,7 +146,7 @@ script = ExtResource( 5 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 2
+frame = 3
 playing = true
 
 [node name="pupil" type="Sprite" parent="."]
@@ -167,7 +167,7 @@ collision_mask = 64
 script = ExtResource( 6 )
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="PlayerDetectionZone"]
-position = Vector2( 39.2308, 56.1539 )
+position = Vector2( 30, 191.538 )
 shape = SubResource( 30 )
 
 [node name="actionTimer" type="Timer" parent="."]

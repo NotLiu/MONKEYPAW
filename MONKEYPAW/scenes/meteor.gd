@@ -51,7 +51,8 @@ func _on_Timer_timeout():
 
 func _on_Hitbox_area_entered(area):
 	print(area.name)
-		
+	if area.get_parent().get_parent().name == "Player":
+		area.get_parent().get_parent().takeDamage(30, self)
 
 
 func _on_Hurtbox_area_entered(area):
