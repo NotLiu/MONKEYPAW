@@ -7,7 +7,7 @@ export var num_enemies = [2, 4, 4, 6, 5]
 var curr_level = 0
 var curr_enemies = num_enemies[curr_level]
 
-var root = get_tree().get_root()
+onready var root = get_tree().get_root()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
