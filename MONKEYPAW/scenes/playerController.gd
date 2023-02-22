@@ -11,6 +11,8 @@ onready var dash = $Dash
 onready var jump = $Jump
 onready var BWshader= get_tree().get_root().get_node("Main/Player/BlackAndWhite")
 
+var isAttacking = false
+
 var dir
 
 var abilities = {
@@ -26,22 +28,34 @@ var abilities = {
 onready var swordHitBox = $HitboxPivot/Area2D
 
 func _ready():
-	pass # Replace with function body.
+	$AnimationTree.active = true
+	#pass # Replace with function body.
 
 func _physics_process(delta):
 	velocity = Vector2.ZERO
 	if Input.is_action_pressed("ui_right"):
+		if (!isAttacking):
+			$AnimationTree.set("parameters/movement/current", 1)
 		dir = "right"
 		velocity.x += 1.0
 	if Input.is_action_pressed("ui_left"):
+		if (!isAttacking):
+			$AnimationTree.set("parameters/movement/current", 1)
 		dir = "left"
 		velocity.x -= 1.0
 	if Input.is_action_pressed("ui_up"):
+		if (!isAttacking):
+			$AnimationTree.set("parameters/movement/current", 1)
 		dir = "up"
 		velocity.y -= 1.0
 	if Input.is_action_pressed("ui_down"):
+		if (!isAttacking):
+			$AnimationTree.set("parameters/movement/current", 1)
 		dir = "down"
 		velocity.y += 1.0
+	
+	if (velocity == Vector2.ZERO and !isAttacking):
+		$AnimationTree.set("parameters/movement/current", 0)
 		
 	if dir == "right":
 		$Sprite.scale.x = 1
@@ -54,11 +68,11 @@ func _physics_process(delta):
 		$HitboxPivot.rotation_degrees = 180
 		$BlockPivot.rotation_degrees = 180
 	if dir == "up":
-		$Sprite.scale.y = -1
+		#$Sprite.scale.y = -1
 		$HitboxPivot.rotation_degrees = 270
 		$BlockPivot.rotation_degrees = 270
 	if dir == "down":
-		$Sprite.scale.y = 1
+		#$Sprite.scale.y = 1
 		$HitboxPivot.rotation_degrees = 90
 		$BlockPivot.rotation_degrees = 90		
 
@@ -66,12 +80,21 @@ func _physics_process(delta):
 	# press A to attack
 	if (abilities["attack"]):
 		if Input.is_action_pressed("attack"):
-			$HitboxPivot/Area2D/CollisionShape2D.disabled = false
-		else:
-			$HitboxPivot/Area2D/CollisionShape2D.disabled = true
+			$AnimationTree.set("parameters/movement/current", 2)
+			#$HitboxPivot/Area2D/CollisionShape2D.disabled = false
+			isAttacking = true
+			yield(get_tree().create_timer(0.6), "timeout")
+			isAttacking = false
+		#else:
+			#$HitboxPivot/Area2D/CollisionShape2D.disabled = true
+	if (isAttacking):
+		$HitboxPivot/Area2D/CollisionShape2D.disabled = false
+	else:
+		$HitboxPivot/Area2D/CollisionShape2D.disabled = true
 	# press S to block
 	if (abilities["block"]):
 		if Input.is_action_pressed("block"):
+			$AnimationTree.set("parameters/movement/current", 3)
 			$BlockPivot/Area2D/CollisionShape2D.disabled = false
 		else:
 			$BlockPivot/Area2D/CollisionShape2D.disabled = true	
