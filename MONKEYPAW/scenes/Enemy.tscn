@@ -21,6 +21,8 @@ radius = 50.0
 radius = 49.8197
 
 [node name="Enemy" type="KinematicBody2D"]
+collision_layer = 256
+collision_mask = 321
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]

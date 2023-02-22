@@ -7,7 +7,7 @@ var health = 100
 var velocity = Vector2.ZERO
 export var FRICTION = 200
 export var ACCELERATION = 100
-export var MAX_SPEED = 150
+export var MAX_SPEED = 250
 
 # state
 enum {
