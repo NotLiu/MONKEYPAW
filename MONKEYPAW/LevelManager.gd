@@ -2,7 +2,7 @@ extends Node2D
 
 
 export var levels = ["Level1", "Level2", "Level3", "Level4", "BossLevel"]
-export var num_enemies = [2, 4, 4, 6, 5]
+export var num_enemies = [2, 4, 4, 5, 5]
 
 var curr_level = 0
 var curr_enemies = num_enemies[curr_level]

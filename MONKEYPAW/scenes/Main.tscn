@@ -36,7 +36,7 @@ script = ExtResource( 10 )
 [node name="LevelManager" parent="." instance=ExtResource( 17 )]
 
 [node name="NextLevelTrigger" parent="." instance=ExtResource( 16 )]
-position = Vector2( 468, -1259 )
+position = Vector2( 472, -685 )
 
 [node name="floor" parent="." instance=ExtResource( 12 )]
 modulate = Color( 0.286275, 0.396078, 0.427451, 1 )
