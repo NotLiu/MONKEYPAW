@@ -79,7 +79,7 @@ func _physics_process(delta):
 
 	# press A to attack
 	if (abilities["attack"]):
-		if Input.is_action_pressed("attack"):
+		if Input.is_action_just_pressed("attack"):
 			$AnimationTree.set("parameters/movement/current", 2)
 			#$HitboxPivot/Area2D/CollisionShape2D.disabled = false
 			isAttacking = true

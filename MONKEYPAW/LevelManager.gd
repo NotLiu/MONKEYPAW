@@ -18,16 +18,22 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if (level_complete()):
-		toggleTrigger(true)
+	#if (level_complete()):
+	if (curr_enemies == 0):
+		#toggleTrigger(true)
+		NextLevelTriggerSprite.visible = true
 	else:
+		NextLevelTriggerSprite.visible = false
 		toggleTrigger(false)
+	print(NextLevelTriggerSprite.visible)
+	print(curr_enemies)
 
 func level_complete():
 	return curr_enemies == 0
 
 func toggleTrigger(val):
-	NextLevelTriggerSprite.visible = val
+	#NextLevelTriggerSprite.visible = val
+	#print(NextLevelTriggerSprite.visible)
 	NextLevelTriggerCollision.disabled = !val
 	
 
