@@ -3,9 +3,11 @@ signal shake
 
 var health = 500
 
-export var numMeteors = 5
+export var numMeteors = 0
 var meteorOnScreen = 0
 var slamStarted = false
+
+export var numShots = 5
 
 export var SHOOTCOOLDOWN = 2.0
 var actionBuffer = 2.0
@@ -64,10 +66,11 @@ func _physics_process(delta):
 			if (!shootTriggered and not transitionTrigger):
 				shootTriggered = true
 				shoot()
-			else:
+			elif numShots >= 5:
 				state = states.IDLE
 				shootTriggered = false
 				#$shootCooldown.stop()
+				numShots = 0
 		states.SLAM:
 			if sprite.animation != "hit" or sprite.frame == 2:
 				sprite.animation = "slam"
@@ -134,6 +137,7 @@ func shoot():
 
 	
 	if player != null:
+		numShots += 1
 		var enemy_projectile_instance = EnemyProjectile.instance()
 		get_tree().get_root().add_child(enemy_projectile_instance)
 		enemy_projectile_instance.global_position = global_position

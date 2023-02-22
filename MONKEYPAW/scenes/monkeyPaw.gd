@@ -81,7 +81,6 @@ func removeTable(value, array): #remove wishes/ costs from the pool
 
 func makeWish(data):
 	print("WISH AND COST BEING MADE: ", data)
-	emit_signal("wish", data) #emit signal to player to apply wish and costs
 	var tw = create_tween()
 	selected = data[2]
 	
@@ -107,7 +106,10 @@ func makeWish(data):
 		var randDict = pawCostTable.keys()
 		var healedItem = removedCosts[randi()%removedCosts.size()]
 		print(healedItem)
+		data.append(healedItem)
 		costs.append(healedItem)
+		
+	emit_signal("wish", data) #emit signal to player to apply wish and costs
 	
 
 func resetState():

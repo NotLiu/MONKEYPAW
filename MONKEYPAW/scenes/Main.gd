@@ -49,7 +49,13 @@ func checkWish(data):
 	elif data[0] == "timeSword":
 		print("TIMESWORDING")
 		player.timeSword = true
-		
+	elif data[0] == "homeBound":
+		print("HOMEBOUND")
+		get_tree().change_scene("res://scenes/home.tscn")
+	elif data[0] == "blessingOfEir":
+		print("GET MECHANIC BACK")
+		player.abilities[data[-1]] = true #restore mechanic
+	elif data[0] == "achillesHeel"
 func requestShake():
 	print("shake request")
 	emit_signal("shake_request")
