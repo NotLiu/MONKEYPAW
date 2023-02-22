@@ -26,6 +26,7 @@ func _process(delta):
 	if player != null and playerConnected == false:
 		player.connect("shake", self, "requestShake")
 		playerConnected = true
+		
 func checkWish(data):
 	print("WISH: ",data)
 	player.abilities[data[1]] = false
@@ -34,7 +35,12 @@ func checkWish(data):
 		$Player/Light2D.visible = false
 	else:
 		$Player/Light2D.visible = true
-
+	if data[1] == "guardianAngel": #if choose wish guardian angel enable revive
+		print("REVIVE ENABLED")
+		player.revive = true
+	elif data[1] == "aegis":
+		print("AEGIS EQUIPPED")
+		
 func requestShake():
 	print("shake request")
 	emit_signal("shake_request")

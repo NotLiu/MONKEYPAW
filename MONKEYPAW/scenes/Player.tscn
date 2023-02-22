@@ -226,6 +226,7 @@ anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/movement/current = 0
 
+[connection signal="area_entered" from="BlockPivot/Area2D" to="." method="_on_Block_entered"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 
 [editable path="Hurtbox"]
