@@ -93,10 +93,10 @@ func _physics_process(delta):
 	else:
 		BWshader.turnOffColor()
 		
-	if (abilities["jump"]):
-		if Input.is_action_pressed("jump") && jump.canJump && !jump.isJumping():
-			jump.startJump(0.5)
-	set_collision_mask_bit(2, false) if jump.isJumping() else set_collision_mask_bit(2, true)
+#	if (abilities["jump"]):
+#		if Input.is_action_pressed("jump") && jump.canJump && !jump.isJumping():
+#			jump.startJump(0.5)
+#	set_collision_mask_bit(2, false) if jump.isJumping() else set_collision_mask_bit(2, true)
 	
 	#abilities["canSight"] = false
 	#if (abilities["canSight"]):
