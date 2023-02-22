@@ -1,6 +1,5 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://scenes/RangedEnemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/RangedEnemyK.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/RadialEnemy.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/Enemy.tscn" type="PackedScene" id=5]
@@ -16,5 +15,5 @@ position = Vector2( 524, 192 )
 [node name="RadialEnemy" parent="." instance=ExtResource( 3 )]
 position = Vector2( 923, -326 )
 
-[node name="RangedEnemy" parent="." instance=ExtResource( 1 )]
-position = Vector2( 303, -676 )
+[node name="RangedEnemyK2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 304, -674 )

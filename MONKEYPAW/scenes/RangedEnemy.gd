@@ -1,6 +1,6 @@
 extends RigidBody2D
 
-var health = 100
+var health = 60
 
 
 export var FRICTION = 200
@@ -100,6 +100,8 @@ func take_damage(dmg):
 	health -= dmg
 	
 	if (health <= 0):
+		LevelManager.curr_enemies -= 1
+		print(LevelManager.curr_enemies)
 		queue_free()
 		
 		

@@ -92,6 +92,8 @@ func take_damage(dmg):
 	health -= dmg
 	
 	if (health <= 0):
+		LevelManager.curr_enemies-=1
+		print(LevelManager.curr_enemies)
 		queue_free()
 
 func _on_ChargeArea_body_exited(body):

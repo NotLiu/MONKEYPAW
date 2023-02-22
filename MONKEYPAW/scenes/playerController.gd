@@ -1,6 +1,8 @@
 extends KinematicBody2D
 signal shake
 
+onready var healthBar = $CanvasLayer/healthBar/ProgressBar
+
 var velocity = Vector2.ZERO
 export(int) var speed = 200.0
 const origSpeed = 200.0
@@ -166,9 +168,14 @@ func takeDamage(dmg, dmgSource):
 		health -= int(dmg * blockDmgModifier) 
 	else:
 		health -= dmg
+    healthBar.value -= 10
 	if health <= 0 and revive:
 		revive = false
 		health = maxHealth/2
+	if (health <= 0):
+		LevelManager.restart()
+		health = 100
+		healthBar.value = 100
 
 func receiveKnockback(sourcePos, dmg, modifier):
 	var knockbackDir = sourcePos.direction_to(self.global_position)
@@ -194,3 +201,4 @@ func _on_Area2D_body_entered(body):
 	print("ATTACK BLOCKED")
 	takeDamage(10, body)
 	receiveKnockback(body.global_position, 10 * blockDmgModifier, blockKnockBackModifier)
+
