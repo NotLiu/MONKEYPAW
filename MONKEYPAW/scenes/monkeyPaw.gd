@@ -104,7 +104,7 @@ func makeWish(data):
 	
 	if data[0] == "blessingOfEir":
 		var randDict = pawCostTable.keys()
-		var healedItem = removedCosts[randi()%removedCosts.size()]
+		var healedItem = removedCosts[randi()%removedCosts.size()-1]
 		print(healedItem)
 		data.append(healedItem)
 		costs.append(healedItem)

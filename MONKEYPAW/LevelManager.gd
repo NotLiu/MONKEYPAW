@@ -21,7 +21,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	print("CURRLEVEL",curr_level)
 	#if (level_complete()):
 		#toggleTrigger(true)
 	#else:
@@ -46,6 +45,7 @@ func restart():
 	
 	toggleTrigger(false)
 	curr_level = 0
+	root.get_node("Main/Player/CanvasLayer/monkeyIndicator").resetHand()
 
 	curr_enemies = num_enemies[0]
 	var restart_level_resource = load("res://scenes/Level1.tscn")
