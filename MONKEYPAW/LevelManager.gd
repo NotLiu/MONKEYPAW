@@ -8,6 +8,8 @@ var curr_level = 0
 var curr_enemies = num_enemies[curr_level]
 
 onready var root = get_tree().get_root()
+onready var NextLevelTriggerSprite = get_tree().get_root().get_node("Main/NextLevelTrigger/Sprite")
+onready var NextLevelTriggerCollision = get_tree().get_root().get_node("Main/NextLevelTrigger/Area2D/CollisionShape2D")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,11 +19,17 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if (level_complete()):
-		load_next_level()
-	pass
+		toggleTrigger(true)
+	else:
+		toggleTrigger(false)
 
 func level_complete():
 	return curr_enemies == 0
+
+func toggleTrigger(val):
+	NextLevelTriggerSprite.visible = val
+	NextLevelTriggerCollision.disabled = !val
+	
 
 func load_next_level():
 	# Remove the current level
@@ -30,8 +38,9 @@ func load_next_level():
 	level.call_deferred("free")
 
 	# Add the next level
-	curr_level += 1
-	curr_enemies = num_enemies[curr_level]
-	var next_level_resource = load("res://path/to/" + curr_level + ".tscn")
-	var next_level = next_level_resource.instance()
-	root.add_child(next_level)
+	if (curr_level <= (len(levels) - 2)):
+		curr_level += 1
+		curr_enemies = num_enemies[curr_level]
+		var next_level_resource = load("res://path/to/" + curr_level + ".tscn")
+		var next_level = next_level_resource.instance()
+		root.add_child(next_level)
