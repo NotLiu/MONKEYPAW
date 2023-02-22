@@ -1,6 +1,9 @@
 extends KinematicBody2D
 signal shake
 
+var health = 100
+onready var healthBar = $Camera2D/healthBar/ProgressBar
+
 var velocity = Vector2.ZERO
 export(int) var speed = 200.0
 const origSpeed = 200.0
@@ -140,4 +143,6 @@ func _physics_process(delta):
 func _on_Hurtbox_area_entered(area):
 	print("player getting attacked")
 	emit_signal("shake")
+	health -= 10
+	healthBar.value -= 10
 	pass
