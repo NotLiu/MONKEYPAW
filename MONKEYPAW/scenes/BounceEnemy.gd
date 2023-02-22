@@ -41,11 +41,13 @@ func _physics_process(delta):
 	
 	match state:
 		IDLE:
+			$AnimationTree.set("parameters/movement/current", 0)
 			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 			seek_player()
 			
 			velocity = move_and_slide(velocity)
 		ATTACK_IDLE:
+			$AnimationTree.set("parameters/movement/current", 1)
 			var player = PlayerDetectionZone.player
 			if (player != null):
 				if (!attackTriggered):
@@ -59,6 +61,7 @@ func _physics_process(delta):
 					
 			velocity = move_and_slide(velocity)
 		ATTACK:
+			$AnimationTree.set("parameters/movement/current", 1)
 			var player = PlayerDetectionZone.player
 			if (player != null):
 				var collision_info = move_and_collide(velocity * delta)
@@ -85,6 +88,7 @@ func target_player(delta):
 		AttackTimer.stop()
 		
 func take_damage(dmg):
+	$AnimationTree.set("parameters/movement/current", 2)
 	health -= dmg
 	
 	if (health <= 0):
